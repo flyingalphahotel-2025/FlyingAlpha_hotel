@@ -50,43 +50,49 @@ const HotelBookingForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
+    <div className="min-h-[20vh] bg-gray-100 flex justify-center items-center  w-full">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-lg bg-white rounded-lg shadow-lg p-6"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+  className="w-full  bg-white rounded-lg shadow-lg p-6"
+>
+  <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center">Book Your Stay</h1>
+  
+  {/* Initial Fields */}
+  <div className="flex gap-4 items-end flex-col md:flex-row"> {/* Use flex and gap for horizontal layout */}
+    <div className="flex-1">
+      <input
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Name"
+        className="w-full px-4 py-2 border  focus:ring-2 focus:ring-blue-500 rounded-2xl"
+        required
+      />
+    </div>
+    <div className="flex-1">
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Email"
+        className="w-full px-4 py-2 border  focus:ring-2 focus:ring-blue-500  rounded-2xl"
+        required
+      />
+    </div>
+    <div className="flex-1">
+      <button
+        onClick={() => setIsOpen(true)}
+        className="w-full  bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
       >
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">Book Your Stay</h1>
-        
-        {/* Initial Fields */}
-        <div className="space-y-4">
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Name"
-            className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email"
-            className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-            required
-          />
-          <button
-            onClick={() => setIsOpen(true)}
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
-          >
-            Book Now
-          </button>
-        </div>
-      </motion.div>
+        Book Now
+      </button>
+    </div>
+  </div>
+</motion.div>
 
       {/* Modal */}
       <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="fixed inset-0 flex items-center justify-center z-50">
