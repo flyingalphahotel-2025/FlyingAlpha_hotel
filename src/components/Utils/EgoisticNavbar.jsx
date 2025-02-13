@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import Navbar from '../frontend/shared/Navbar';
+import Navbar from '../Frontend/Shared/Navbar';
 
 const EgoisticNavbar = () => {
   const pathname = usePathname();
