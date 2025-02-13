@@ -12,7 +12,6 @@ const Footer = () => {
     "/Hotels/Bedroom1.jpg",
     "/Hotels/Bedroom3.jpg",
     "/Hotels/Bedroom2.jpg",
-   
   ];
 
   return (
