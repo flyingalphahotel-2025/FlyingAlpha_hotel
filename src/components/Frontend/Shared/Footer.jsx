@@ -1,16 +1,18 @@
-"use client"
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 const Footer = () => {
   const images = [
-    "/frontend/footerImage/image1.jpg",
-    "/frontend/footerImage/image2.jpg",
-    "/frontend/footerImage/image3.jpg",
-    "/frontend/footerImage/image4.jpg",
-    "/frontend/footerImage/image5.webp",
-    "/frontend/footerImage/image6.jpg",
+    "/Hotels/Bedroom1.jpg",
+    "/Hotels/Bedroom2.jpg",
+    "/Hotels/Bedroom3.jpg",
+    "/Hotels/Bedroom4.jpg",
+    "/Hotels/Bedroom1.jpg",
+    "/Hotels/Bedroom3.jpg",
+    "/Hotels/Bedroom2.jpg",
+   
   ];
 
   return (
@@ -24,57 +26,38 @@ const Footer = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Know about <span className="text-[#FF0080]">Bring Smile Foundation</span>
+            Know about <span className="text-[#FF0080]">Hotel O Flying Alpha</span>
           </motion.h2>
           <ul className="space-y-2">
             <li>
-              <Link
-                href={"/"}
-                className="hover:text-yellow-500"
-                whileHover={{ scale: 1.1 }}
-              >
+              <Link href="/" className="hover:text-yellow-500">
                 HOME
               </Link>
             </li>
-            
             <li>
-              <Link
-                href={"/aboutUs"}
-                className="hover:text-yellow-500"
-                whileHover={{ scale: 1.1 }}
-              >
+              <Link href="/aboutUs" className="hover:text-yellow-500">
                 ABOUT US
               </Link>
             </li>
             <li>
-              <Link
-                href={"/contactUs"}
-                className="hover:text-yellow-500"
-                whileHover={{ scale: 1.1 }}
-              >
+              <Link href="/contactUs" className="hover:text-yellow-500">
                 CONTACT US
               </Link>
             </li>
             <li>
-              <motion.a
-                href="#"
-                className="hover:text-yellow-500"
-                whileHover={{ scale: 1.1 }}
-              >
+              <Link href="/events" className="hover:text-yellow-500">
                 EVENTS
-              </motion.a>
+              </Link>
             </li>
             <li>
-              <motion.a
-                href="#"
-                className="hover:text-yellow-500"
-                whileHover={{ scale: 1.1 }}
-              >
-                DONATE
-              </motion.a>
+              <Link href="/bookNow" className="hover:text-yellow-500">
+                BOOK NOW
+              </Link>
             </li>
           </ul>
-          <p className="mt-4 text-sm md:text-base text-gray-400">support@bringsmile.in</p>
+          <p className="mt-4 text-sm md:text-base text-gray-400">
+            support@hotelflyingalpha.com
+          </p>
         </div>
 
         {/* Middle Section */}
@@ -83,26 +66,32 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex space-x-3">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWpUocakbrozKWu46pKtUHlv3h9gYOg6HyOA&s"
+                src="https://example.com/highlight1.jpg"
                 alt="Highlight 1"
                 className="w-14 h-14 md:w-16 md:h-16 object-cover rounded"
               />
               <div>
-                <h4 className="font-bold text-sm md:text-base">Sees boom in younger volunteers</h4>
-                <p className="text-xs md:text-sm text-gray-400">September 14, 2024</p>
+                <h4 className="font-bold text-sm md:text-base">
+                  Experience Comfort and Luxury
+                </h4>
+                <p className="text-xs md:text-sm text-gray-400">
+                  February 10, 2025
+                </p>
               </div>
             </div>
             <div className="flex space-x-3">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMyAVcM5573bNCm7iwR-DgTnFLgxD3GMR2JA&s"
+                src="https://example.com/highlight2.jpg"
                 alt="Highlight 2"
                 className="w-14 h-14 md:w-16 md:h-16 object-cover rounded"
               />
               <div>
                 <h4 className="font-bold text-sm md:text-base">
-                  Breaking Barriers: Empowering Women in Sports
+                  Prime Location in Patna
                 </h4>
-                <p className="text-xs md:text-sm text-gray-400">June 11, 2024</p>
+                <p className="text-xs md:text-sm text-gray-400">
+                  January 15, 2025
+                </p>
               </div>
             </div>
           </div>
@@ -110,13 +99,13 @@ const Footer = () => {
 
         {/* Right Section */}
         <div>
-          <h3 className="text-lg md:text-xl font-bold mb-4">NEW HIGHLIGHTS</h3>
+          <h3 className="text-lg md:text-xl font-bold mb-4">GALLERY</h3>
           <div className="grid grid-cols-3 gap-2">
             {images.map((image, index) => (
               <img
                 key={index}
                 src={image}
-                alt={`Highlight ${index + 1}`}
+                alt={`Gallery Image ${index + 1}`}
                 className="w-full h-12 md:h-16 object-cover rounded"
               />
             ))}
@@ -128,26 +117,29 @@ const Footer = () => {
       <div className="border-t border-gray-800 mt-8 pt-4 text-center md:text-left">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-sm md:text-base">
-            © All rights reserved 2024 <span className="font-bold text-[#FF0080]">BringSmile Foundation</span>
+            © All rights reserved 2025{" "}
+            <span className="font-bold text-[#FF0080]">
+              Hotel O Flying Alpha
+            </span>
           </p>
           <div className="flex space-x-4 items-center">
             <Link
-              href={"/privacyPolicy"}
+              href="/privacyPolicy"
               className="bg-white text-black px-3 py-1 text-xs md:text-sm rounded shadow hover:bg-[#FF0080] hover:text-white"
             >
               Privacy Policy
             </Link>
             <Link
-             href={"/returnPolicy"}
+              href="/refundPolicy"
               className="bg-white text-black px-3 py-1 text-xs md:text-sm rounded shadow hover:bg-[#FF0080] hover:text-white"
             >
               Refund and Returns Policy
             </Link>
             <Link
-              href={"/termsAndConditions"}
+              href="/termsAndConditions"
               className="bg-white text-black px-3 py-1 text-xs md:text-sm rounded shadow hover:bg-[#FF0080] hover:text-white"
             >
-              Terms & Condition
+              Terms & Conditions
             </Link>
           </div>
         </div>
