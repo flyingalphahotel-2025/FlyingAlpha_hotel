@@ -15,117 +15,64 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-black text-white">
-      
+    <header class="py-4 bg-black sm:py-6" x-data="{expanded: false}">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <div class="shrink-0">
+                    <a href="#" title="" class="flex">
+                        <img class="w-auto h-9" src="https://landingfoliocom.imgix.net/store/collection/dusk/images/logo.svg" alt="" />
+                    </a>
+                </div>
 
-      {/* Main Navbar */}
-      <nav className="flex justify-between items-center px-6  bg-white text-black">
-              <motion.div
-          initial={{ opacity: 0, scale: 0.8 }} // Starting state
-          animate={{ opacity: 1, scale: 1 }}  // Final state
-          transition={{ duration: 0.5, ease: "easeInOut" }} // Animation timing
-          whileHover={{ scale: 1.1 }} // Hover effect
-          className="flex items-center space-x-3"
-        >
-          <Link href={"/"}>
-            <Image src={logo} alt="BringSmile Logo" width={70} height={70} />
-          </Link>
-        </motion.div>
-        <ul className="hidden md:flex space-x-6 font-medium">
-            {[
-              { href: "/", label: "HOME" },
-              { href: "/aboutUs", label: "ABOUT US" },
-              { href: "/contactUs", label: "CONTACT US" },
-              { href: "#", label: "EVENTS" },
-              { href: "#", label: "CAUSES" },
-            ].map((item, index) => (
-              <motion.li
-                key={index}
-                whileHover={{ scale: 1.1, color: "#FF0080" }} // Framer Motion animation
-                transition={{ duration: 0.3 }} // Smooth transition
-              >
-                <Link
-                  href={item.href}
-                  className="hover:text-[#FF0080] hover:underline transition-colors duration-300"
-                >
-                  {item.label}
-                </Link>
-              </motion.li>
-            ))}
-          </ul>
-        <div className="flex items-center space-x-4">
-        <motion.button
-          className="hidden sm:flex items-center px-4 py-2 border border-black rounded-full transition-all duration-300"
-          whileHover={{
-            scale: 1.05, // Scale up on hover
-            backgroundColor: "#FF0080", // Background color change on hover
-            color: "white", // Text color change on hover
-          }}
-          whileTap={{
-            scale: 0.95, // Slight shrink on tap to simulate a press
-          }}
-        >
-          Donate Now 
-          <span className="ml-2 text-red-500">❤</span>
-        </motion.button>
+                <div class="flex md:hidden">
+                    <button type="button" class="text-white" @click="expanded = !expanded" :aria-expanded="expanded">
+                        <span x-show="!expanded" aria-hidden="true">
+                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </span>
 
+                        <span x-show="expanded" aria-hidden="true">
+                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </span>
+                    </button>
+                </div>
 
-          <motion.button
-            whileHover={{ scale: 1.2 }}
-            className="block md:hidden text-xl"
-            onClick={handleMenuToggle}
-          >
-            MENU ☰
-          </motion.button>
+                <nav class="hidden ml-10 mr-auto space-x-10 lg:ml-20 lg:space-x-12 md:flex md:items-center md:justify-start">
+                    <a href="#" title="" class="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Products </a>
+
+                    <a href="#" title="" class="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Features </a>
+
+                    <a href="#" title="" class="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Pricing </a>
+
+                    <a href="#" title="" class="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Support </a>
+                </nav>
+
+                <div class="relative hidden md:items-center md:justify-center md:inline-flex group">
+                    <div class="absolute transition-all duration-200 rounded-full -inset-px bg-gradient-to-r from-cyan-500 to-purple-500 group-hover:shadow-lg group-hover:shadow-cyan-500/50"></div>
+                    <a href="#" title="" class="relative inline-flex items-center justify-center px-6 py-2 text-base font-normal text-white bg-black border border-transparent rounded-full" role="button"> Start free trial </a>
+                </div>
+            </div>
+
+            <nav x-show="expanded" x-collapse>
+                <div class="flex flex-col pt-8 pb-4 space-y-6">
+                    <a href="#" title="" class="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Products </a>
+
+                    <a href="#" title="" class="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Features </a>
+
+                    <a href="#" title="" class="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Pricing </a>
+
+                    <a href="#" title="" class="text-base font-normal text-gray-400 transition-all duration-200 hover:text-white"> Support </a>
+
+                    <div class="relative inline-flex items-center justify-center group">
+                        <div class="absolute transition-all duration-200 rounded-full -inset-px bg-gradient-to-r from-cyan-500 to-purple-500 group-hover:shadow-lg group-hover:shadow-cyan-500/50"></div>
+                        <a href="#" title="" class="relative inline-flex items-center justify-center w-full px-6 py-2 text-base font-normal text-white bg-black border border-transparent rounded-full" role="button"> Start free trial </a>
+                    </div>
+                </div>
+            </nav>
         </div>
-      </nav>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "100%" }}
-          className="fixed inset-0 bg-white text-black z-50 p-6 flex flex-col"
-        >
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-bold">Menu</h2>
-            <button
-              onClick={handleMenuToggle}
-              className="text-2xl hover:text-red-500"
-            >
-              <IoClose />
-            </button>
-          </div>
-          <ul className="flex flex-col space-y-4 text-lg font-medium">
-            <Link href={"/"}>
-            <li className="hover:text-orange-500">HOME</li>
-            </Link>
-            <Link href={"/aboutUs"}>
-            <li className="hover:text-orange-500">ABOUT US</li>
-            </Link>
-            <li className="hover:text-orange-500">UPCOMING EVENTS</li>
-            <li className="hover:text-orange-500">DONATION CAMPAIGNS</li>
-            <li className="hover:text-orange-500">BECOME A VOLUNTEER</li>
-            <li className="text-orange-500 font-bold">CONTACT US</li>
-            <li className="hover:text-orange-500">FAQ&apos;S</li>
-          </ul>
-          <div className="mt-auto flex flex-wrap justify-between pt-6 border-t border-gray-300 text-sm">
-            <a href="#" className="hover:text-orange-500">
-              Ongoing Events →
-            </a>
-            <Link href={"/termsAndConditions"} className="hover:text-orange-500">
-              Terms & Conditions →
-            </Link>
-            <Link href={"/returnPolicy"} className="hover:text-orange-500">
-              Refund and Returns Policy →
-            </Link>
-            <Link href={"/privacyPolicy"} className="hover:text-orange-500">
-              Privacy Policy →
-            </Link>
-          </div>
-        </motion.div>
-      )}
     </header>
   );
 };
