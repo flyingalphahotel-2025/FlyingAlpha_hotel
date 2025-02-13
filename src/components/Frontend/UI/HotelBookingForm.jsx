@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
+import { FaShareAlt } from "react-icons/fa"; // Import the share icon
+
 
 const HotelBookingForm = () => {
   const [formData, setFormData] = useState({
@@ -148,41 +150,74 @@ const HotelBookingForm = () => {
         </div>
 
         {/* Right Side - Booking Form */}
-        <div className="w-full md:w-1/2 p-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">Book Your Stay</h1>
-            <div className="space-y-4">
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Name"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-                required
-              />
-              <button
-                onClick={() => setIsOpen(true)}
-                className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
-              >
-                Book Now
-              </button>
-            </div>
-          </motion.div>
-        </div>
+
+<div className="w-full md:w-1/2 p-6">
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+  >
+    {/* Heading and Description */}
+    <h1 className="text-3xl font-bold text-gray-800 mb-2">Book Your Stay</h1>
+    <p className="text-gray-600 mb-6">
+      Experience luxury and comfort like never before. Fill out the form below to reserve your stay with us.
+    </p>
+
+    {/* Form Fields */}
+    <div className="space-y-6">
+      {/* Name Field */}
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+          Name
+        </label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Enter your name"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          required
+        />
+      </div>
+
+      {/* Email Field */}
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+          Email
+        </label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Enter your email"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          required
+        />
+      </div>
+
+      {/* Book Now Button */}
+      <button
+        onClick={() => setIsOpen(true)}
+        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+      >
+        Book Now
+      </button>
+
+      {/* Share Icon */}
+      <div className="flex justify-center items-center mt-4">
+        <button
+          onClick={() => alert("Share this page!")} // Add share functionality
+          className="flex items-center text-gray-600 hover:text-blue-600 transition-all"
+        >
+          <FaShareAlt className="mr-2" />
+          <span className="text-sm font-medium">Share this offer</span>
+        </button>
+      </div>
+    </div>
+  </motion.div>
+</div>
       </div>
 
       {/* Modal */}
