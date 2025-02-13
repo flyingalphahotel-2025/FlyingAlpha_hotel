@@ -15,19 +15,13 @@ const Navbar = () => {
   };
 
   return (
-    <header className="py-4 bg-black sm:py-6">
+    <header className="py-3 bg-black sm:py-6">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="shrink-0">
             <Link href="#" className="flex">
-              <Image
-                src={logo}
-                alt="Logo"
-                className="w-auto h-9"
-                width={100}
-                height={36}
-              />
+              <span className="text-2xl pinyon-script-regular text-white">Flying Alpha Hotel</span>
             </Link>
           </div>
 
@@ -83,7 +77,7 @@ const Navbar = () => {
               className="relative inline-flex items-center justify-center px-6 py-2 text-base font-normal text-white bg-black border border-transparent rounded-full"
               role="button"
             >
-              Start free trial
+              Book Now
             </Link>
           </div>
         </div>

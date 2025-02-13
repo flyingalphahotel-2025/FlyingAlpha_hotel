@@ -79,7 +79,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-4 text-lg font-light text-gray-300 sm:mt-8"
+            className="mt-4 text-lg font-light text-gray-300 sm:mt-8 pinyon-script-regular"
           >
             Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat.
           </motion.p>
@@ -91,7 +91,7 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="mt-8 sm:mt-12"
           >
-            <p className="text-lg font-normal text-white">
+            <p className="text-lg font-normal text-white pinyon-script-regular">
               Trusted by 50k+ users
             </p>
 
@@ -105,10 +105,10 @@ const HeroSection = () => {
                   />
                 ))}
               </div>
-              <span className="ml-2 text-base font-normal text-white">
+              <span className="ml-2 text-base font-normal text-white pinyon-script-regular">
                 4.1/5
               </span>
-              <span className="ml-1 text-base font-normal text-gray-400">
+              <span className="ml text-base font-normal text-gray-400 pinyon-script-regular" >
                 (14k Reviews)
               </span>
             </div>
