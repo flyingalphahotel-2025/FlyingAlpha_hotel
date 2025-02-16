@@ -10,7 +10,7 @@ const page = () => {
     <div>
       <HeroSection/>
       <HotelBookingForm/>
-      {/* <FeaturesSection/> */}
+      <FeaturesSection/>
       <Testimonial/>
       <FAQs/>
     </div>
