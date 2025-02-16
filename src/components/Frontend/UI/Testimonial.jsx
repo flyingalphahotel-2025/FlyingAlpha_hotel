@@ -1,55 +1,76 @@
-import React from 'react';
-import { FaStar } from 'react-icons/fa';
+import React from "react";
+import { FaUserFriends, FaChild, FaUtensils, FaHotel, FaBroom } from "react-icons/fa";
 
 const Testimonial = () => {
   return (
     <section className="py-12 bg-gray-50 sm:py-16 lg:py-20">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center text-center">
-          <p className="text-lg font-medium text-gray-600">2,157 people have said how good Rareblocks</p>
-          <h2 className="mt-4 text-3xl font-bold text-gray-900 sm:text-4xl xl:text-5xl">
-            Our happy clients say about us
+        {/* Heading */}
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl xl:text-5xl">
+            Why Choose <span className="text-blue-600">Flying Alpha Hotel?</span>
           </h2>
+          <p className="mt-4 text-lg text-gray-600">
+            Experience comfort, luxury, and the best hospitality for all.
+          </p>
         </div>
-        
-        <div className="mt-8 text-center md:mt-16">
-          <a href="#" className="pb-2 text-base font-bold text-gray-900 border-b-2 border-gray-900 hover:border-gray-600">
-            Check all 2,157 reviews
-          </a>
-        </div>
-        
-        <div className="relative mt-10 md:mt-24">
-          <div className="grid max-w-lg grid-cols-1 gap-6 mx-auto md:max-w-none lg:gap-10 md:grid-cols-3">
-            <div className="flex flex-col overflow-hidden shadow-xl bg-white p-6 rounded-lg">
-              <div className="flex flex-col justify-between flex-1">
-                <div className="flex items-center">
-                  {[...Array(5)].map((_, index) => (
-                    <FaStar key={index} className="text-[#FDB241] w-5 h-5" />
-                  ))}
-                </div>
-                
-                <blockquote className="flex-1 mt-8">
-                  <p className="text-lg leading-relaxed text-gray-900">
-                    “You made it so simple. My new site is so much faster and easier to work with than my old site.”
-                  </p>
-                </blockquote>
-              </div>
-              
-              <div className="flex items-center mt-8">
-                <img className="flex-shrink-0 object-cover rounded-full w-11 h-11" 
-                     src="https://cdn.rareblocks.xyz/collection/clarity/images/testimonial/4/avatar-male-1.png" 
-                     alt="" />
-                <div className="ml-4">
-                  <p className="text-base font-bold text-gray-900">Leslie Alexander</p>
-                  <p className="text-sm text-gray-600">CEO, Rareblocks</p>
-                </div>
-              </div>
+
+        {/* Features Grid */}
+        <div className="grid gap-6 mt-10 md:grid-cols-2 lg:grid-cols-3">
+          {/* Feature Cards */}
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center p-6 bg-white shadow-xl rounded-lg hover:shadow-2xl transition-all duration-300"
+            >
+              <div className="text-blue-600 text-5xl">{feature.icon}</div>
+              <h3 className="mt-4 text-xl font-bold text-gray-900">{feature.title}</h3>
+              <p className="mt-2 text-gray-600 text-center">{feature.description}</p>
             </div>
-          </div>
+          ))}
+        </div>
+
+        {/* Book Now Button */}
+        <div className="mt-10 text-center">
+          <a
+            href="#"
+            className="px-6 py-3 text-lg font-bold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300"
+          >
+            Book Now
+          </a>
         </div>
       </div>
     </section>
   );
 };
+
+// Features Data
+const features = [
+  {
+    icon: <FaUserFriends className="drop-shadow-lg" />,
+    title: "Couples Friendly",
+    description: "Enjoy a private and comfortable stay with premium amenities.",
+  },
+  {
+    icon: <FaHotel className="drop-shadow-lg" />,
+    title: "Family Friendly",
+    description: "Spacious rooms and family suites for a perfect stay.",
+  },
+  {
+    icon: <FaChild className="drop-shadow-lg" />,
+    title: "Child Friendly",
+    description: "Safe play areas and special services for kids.",
+  },
+  {
+    icon: <FaBroom className="drop-shadow-lg" />,
+    title: "Neat & Clean",
+    description: "Hygienic environment with daily housekeeping services.",
+  },
+  {
+    icon: <FaUtensils className="drop-shadow-lg" />,
+    title: "Food Available",
+    description: "Delicious multi-cuisine meals available 24/7.",
+  },
+];
 
 export default Testimonial;
