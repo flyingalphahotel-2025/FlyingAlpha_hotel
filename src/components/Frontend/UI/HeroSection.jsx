@@ -64,26 +64,25 @@ const HeroSection = () => {
 
         {/* Left Column: Text and Form */}
         <div>
-          {/* Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl font-bold text-white sm:text-5xl lg:text-6xl xl:text-7xl"
-          >
-            Connecting Devs with Employers
-          </motion.h1>
+            {/* Title */}
+            <motion.h1
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.2 }}
+    className="text-xl font-bold text-white sm:text-5xl lg:text-6xl xl:text-7xl"
+    >
+    Experience Luxury at FlyingAlpha Hotel
+    </motion.h1>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-4 text-lg font-light text-gray-300 sm:mt-8 pinyon-script-regular"
-          >
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat.
-          </motion.p>
-
+    {/* Description */}
+    <motion.p
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.4 }}
+    className="mt-4 text-lg font-light text-gray-300 sm:mt-8 pinyon-script-regular"
+    >
+    Discover a world of elegance and comfort at FlyingAlpha Hotel. Whether you're here for leisure or business, we offer top-notch hospitality, luxurious rooms, and world-class dining for an unforgettable stay.
+    </motion.p>
           {/* Trusted Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
