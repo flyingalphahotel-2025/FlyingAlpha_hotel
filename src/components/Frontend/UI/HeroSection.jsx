@@ -1,7 +1,6 @@
 "use client"
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaStar, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const HeroSection = () => {
   const images = [
@@ -16,107 +15,65 @@ const HeroSection = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Auto slide every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000); // Change slide every 5 seconds
-
+    }, 5000);
     return () => clearInterval(interval);
   }, [images.length]);
 
-  const goToNextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const goToPrevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  };
-
   return (
-    <div>
-  <section className="relative py-12 overflow-hidden bg-gray-900 sm:pb-16 lg:pb-20 xl:pb-24">
-    <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-      <div className="grid items-center grid-cols-1 gap-y-12 lg:grid-cols-2 gap-x-16">
-        {/* Right Column: Slider */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
+    <div className="w-full min-h-[50vh] flex flex-col md:flex-row">
+      {/* Left Side Slider */}
+      <div className="relative md:w-1/2 h-64 md:h-auto overflow-hidden">
+        <AnimatePresence>
+          <motion.img
+            key={currentIndex}
+            src={images[currentIndex]}
+            alt={`Slide ${currentIndex}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="absolute top-0 left-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
+        {/* Overlay for better readability if needed */}
+        <div className="absolute inset-0 bg-black opacity-30"></div>
+      </div>
+
+      {/* Right Side Content */}
+      <div className="flex flex-col justify-center items-start md:w-1/2 p-6 bg-gray-900">
+        <motion.h1
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-3xl md:text-5xl font-bold text-white"
+        >
+          Experience Luxury at FlyingAlpha Hotel
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="relative hidden md:flex"
+          className="mt-4 text-base md:text-lg text-gray-300"
         >
-          <div className="relative w-full h-96 overflow-hidden rounded-lg shadow-lg">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={currentIndex}
-                src={images[currentIndex]}
-                alt={`Slide ${currentIndex}`}
-                className="absolute inset-0 object-cover w-full h-full"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-              />
-            </AnimatePresence>
-          </div>
-        </motion.div>
+          Discover a world of elegance and comfort at FlyingAlpha Hotel. Enjoy luxurious rooms, world-class dining, and impeccable service tailored for your leisure or business needs.
+        </motion.p>
 
-        {/* Left Column: Text and Form */}
-        <div>
-            {/* Title */}
-            <motion.h1
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.2 }}
-    className="text-xl font-bold text-white sm:text-5xl lg:text-6xl xl:text-7xl"
-    >
-    Experience Luxury at FlyingAlpha Hotel
-    </motion.h1>
-
-    {/* Description */}
-    <motion.p
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.4 }}
-    className="mt-4 text-lg font-light text-gray-300 sm:mt-8 pinyon-script-regular"
-    >
-    Discover a world of elegance and comfort at FlyingAlpha Hotel. Whether you're here for leisure or business, we offer top-notch hospitality, luxurious rooms, and world-class dining for an unforgettable stay.
-    </motion.p>
-          {/* Trusted Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-8 sm:mt-12"
-          >
-            <p className="text-lg font-normal text-white pinyon-script-regular">
-              Trusted by 50k+ users
-            </p>
-
-            <div className="flex items-center mt-3">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar
-                    key={i}
-                    className="w-5 h-5 text-yellow-400"
-                    fill="url(#gradient)"
-                  />
-                ))}
-              </div>
-              <span className="ml-2 text-base font-normal text-white pinyon-script-regular">
-                4.1/5
-              </span>
-              <span className="ml text-base font-normal text-gray-400 pinyon-script-regular" >
-                (14k Reviews)
-              </span>
-            </div>
-          </motion.div>
-        </div>
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          onClick={() => window.location.href = "/booking"}
+          className="mt-6 px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none"
+        >
+          Book Now
+        </motion.button>
       </div>
     </div>
-  </section>
-</div>
   );
 };
 
