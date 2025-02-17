@@ -73,7 +73,7 @@ const WhyChooseUs = () => {
           {/* Badge */}
           <div className="absolute top-0 right-0 bg-orange-500 text-white px-4 py-2 rounded-bl-lg text-sm font-bold flex items-center">
             <FaStar className="mr-2" />
-            Popular Features
+            Couples Friendly
           </div>
         </div>
       </div>
