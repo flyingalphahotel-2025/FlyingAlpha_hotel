@@ -18,7 +18,7 @@ const Footer = () => {
         {/* Left Section - Title & Address */}
         <div>
           <motion.h2
-            className="text-2xl md:text-3xl font-bold mb-4"
+            className="text-2xl md:text-3xl font-bold mb-4 text-[#FF0080]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -28,7 +28,7 @@ const Footer = () => {
           <p className="text-sm md:text-base text-gray-400">
             Plot No 31/B Rajeev Nagar Main Road, Opposite Ruban Singh Market, <br /> Near Rajdhani Kirana Store, Road No Zero, Patna
           </p>
-          <p className="mt-4 text-sm md:text-base text-gray-400">
+          <p className="mt-4 text-sm md:text-base  text-[#FF0080]">
             support@hotelflyingalpha.com
           </p>
         </div>
