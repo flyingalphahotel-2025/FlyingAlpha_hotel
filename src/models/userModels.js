@@ -24,18 +24,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    address: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Address',
-    }],
+    dob:{
+        type: Date,
+    },
     role: {
         type: String,
-        enum: ['User', 'SuperAdmin' , 'Vendor'],
+        enum: ['User', 'SuperAdmin' ],
         default: 'User'
     },
     status: {
         type: String,
-        enum: ['Blocked', 'Pending', 'inReview', 'Active'],
+        enum: ['Blocked', 'Active'],
         default: 'Active'
     },
 }, {
