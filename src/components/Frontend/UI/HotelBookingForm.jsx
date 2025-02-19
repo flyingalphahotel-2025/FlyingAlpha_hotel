@@ -178,13 +178,14 @@ const HotelBookingForm = () => {
           value={formData.name}
           onChange={handleChange}
           placeholder="Enter your name"
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-          required
+          className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all ${
+            formData.email ? 'text-black' : 'text-white'
+          }`}
         />
       </div>
 
       {/* Email Field */}
-      <div>
+            <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
           Email
         </label>
@@ -194,10 +195,13 @@ const HotelBookingForm = () => {
           value={formData.email}
           onChange={handleChange}
           placeholder="Enter your email"
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-          required
+          className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all ${
+            formData.email ? 'text-black' : 'text-white'
+          }`}
+         required
         />
       </div>
+
 
       {/* Book Now Button */}
       <button
