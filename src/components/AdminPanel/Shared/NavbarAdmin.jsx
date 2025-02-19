@@ -36,7 +36,7 @@ const Navbar = () => {
 
 
   return (
- <nav className="bg-gray-200 text-black transition-colors duration-300 shadow-lg">
+ <nav className="bg-white text-black transition-colors duration-300 shadow-lg">
     <div className="flex justify-between items-center px-4 ">
     {/* Logo Section */}
     <div className="flex items-center">
