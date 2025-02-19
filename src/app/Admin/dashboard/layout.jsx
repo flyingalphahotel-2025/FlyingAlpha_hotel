@@ -1,7 +1,8 @@
 import 'tailwindcss/tailwind.css';
 import '@/app/globals.css';
-import NavbarAdmin from '@/components/adminPanel/NavbarAdmin';
-import SidebarAdmin from '@/components/adminPanel/SidebarAdmin';
+import SidebarAdmin from '@/components/AdminPanel/Shared/SidebarAdmin';
+import NavbarAdmin from '@/components/AdminPanel/Shared/NavbarAdmin';
+
 
 const Layout = ({ children }) => {
   return (

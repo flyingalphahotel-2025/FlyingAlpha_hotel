@@ -6,10 +6,9 @@ import Navbar from '../Frontend/Shared/Navbar';
 const EgoisticNavbar = () => {
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith('/admin/dashboard');
-  const isUserPage = pathname.startsWith('/user');
 
 
-  if (isAdminPage || isUserPage ) {
+  if (isAdminPage  ) {
     return null; 
   }
 
