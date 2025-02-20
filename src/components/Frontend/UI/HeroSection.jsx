@@ -8,9 +8,6 @@ const HeroSection = () => {
     "/Hotels/Bedroom2.jpg",
     "/Hotels/Bedroom3.jpg",
     "/Hotels/Bedroom4.jpg",
-    "/Hotels/Bedroom1.jpg",
-    "/Hotels/Bedroom3.jpg",
-    "/Hotels/Bedroom2.jpg",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -19,7 +16,7 @@ const HeroSection = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [images.length]);
 

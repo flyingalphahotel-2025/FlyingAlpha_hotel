@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Dialog } from "@headlessui/react";
 import Image from "next/image";
-import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
 import { FaShareAlt } from "react-icons/fa"; // Import the share icon
 
 const HotelBookingForm = () => {
@@ -28,7 +28,6 @@ const HotelBookingForm = () => {
     "/Hotels/gate2.jpeg",
     "/Hotels/gate.jpg",
     "/Hotels/gallery.jpeg",
-   
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +35,8 @@ const HotelBookingForm = () => {
   const [totalPrice, setTotalPrice] = useState(4065);
   const [savings, setSavings] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showAll, setShowAll] = useState(false);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,6 +80,9 @@ const HotelBookingForm = () => {
     );
   };
 
+  const imagesToShow = showAll ? images : images.slice(0, 4);
+
+
   return (
     <div className="py-5 bg-gray-100 flex justify-center items-center p-4">
       <div className="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-lg shadow-lg overflow-hidden">
@@ -87,29 +91,49 @@ const HotelBookingForm = () => {
           <div className="flex flex-col md:flex-row gap-4">
             {/* Thumbnail Column (Desktop) */}
             <motion.div
-              className="hidden md:flex flex-col gap-4"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              {images.map((image, index) => (
-                <motion.div
-                  key={index}
-                  className="w-20 h-20 overflow-hidden rounded-lg shadow-lg cursor-pointer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setCurrentImageIndex(index)}
-                >
-                  <Image
-                    src={image}
-                    alt={`Thumbnail ${index + 1}`}
-                    width={80}
-                    height={80}
-                    className="object-cover w-full h-full"
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
+      className="hidden md:flex flex-col gap-4"
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      {imagesToShow.map((image, index) => (
+        <motion.div
+          key={index}
+          className="w-20 h-20 overflow-hidden rounded-lg shadow-lg cursor-pointer"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setCurrentImageIndex(index)}
+        >
+          <Image
+            src={image}
+            alt={`Thumbnail ${index + 1}`}
+            width={80}
+            height={80}
+            className="object-cover w-full h-full"
+          />
+        </motion.div>
+      ))}
+
+      {/* Show More / Show Less Button */}
+      {images.length > 4 && (
+        <button
+          onClick={() => setShowAll(!showAll)}
+          className="flex items-center justify-center mt-2 text-blue-500 hover:text-blue-700"
+        >
+          {showAll ? (
+            <>
+              <FaChevronUp className="mr-2" />
+              Show Less
+            </>
+          ) : (
+            <>
+              <FaChevronDown className="mr-2" />
+              Show More
+            </>
+          )}
+        </button>
+      )}
+    </motion.div>
 
             {/* Preview Image Container */}
             <motion.div
