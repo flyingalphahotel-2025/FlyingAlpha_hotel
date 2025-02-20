@@ -20,10 +20,15 @@ const HotelBookingForm = () => {
   });
 
   const images = [
-    "/Hotels/Bedroom1.jpg",
     "/Hotels/Bedroom2.jpg",
-    "/Hotels/Bedroom3.jpg",
-    "/Hotels/Bathroom.jpg",
+    "/Hotels/Bedroom1.jpg",
+    "/Hotels/Bedroom4.jpg",
+    "/Hotels/Reception.jpeg",
+    "/Hotels/building.jpg",
+    "/Hotels/gate2.jpeg",
+    "/Hotels/gate.jpg",
+    "/Hotels/gallery.jpeg",
+   
   ];
 
   const [isOpen, setIsOpen] = useState(false);
