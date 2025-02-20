@@ -6,7 +6,6 @@ import Image from "next/image";
 import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
 import { FaShareAlt } from "react-icons/fa"; // Import the share icon
 
-
 const HotelBookingForm = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -15,14 +14,16 @@ const HotelBookingForm = () => {
     checkInDate: "",
     checkOutDate: "",
     coupon: "",
+    noOfPersons: "",
+    noOfRooms: "",
+    roomType: "Executive", // Default room type
   });
 
   const images = [
     "/Hotels/Bedroom1.jpg",
     "/Hotels/Bedroom2.jpg",
     "/Hotels/Bedroom3.jpg",
-    "/Hotels/Bathroom.jpg"
-    
+    "/Hotels/Bathroom.jpg",
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -71,10 +72,6 @@ const HotelBookingForm = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
-  };
-
-  const toggleFullScreen = () => {
-    // Implement full-screen logic if needed
   };
 
   return (
@@ -152,82 +149,230 @@ const HotelBookingForm = () => {
         </div>
 
         {/* Right Side - Booking Form */}
+        <div className="w-full md:w-1/2 p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Heading and Description */}
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Book Your Stay</h1>
+            <p className="text-gray-600 mb-6">
+              Experience luxury and comfort like never before. Fill out the form below to reserve your stay with us.
+            </p>
 
-<div className="w-full md:w-1/2 p-6">
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-  >
-    {/* Heading and Description */}
-    <h1 className="text-3xl font-bold text-gray-800 mb-2">Book Your Stay</h1>
-    <p className="text-gray-600 mb-6">
-      Experience luxury and comfort like never before. Fill out the form below to reserve your stay with us.
-    </p>
+            {/* Form Fields */}
+            <div className="space-y-6">
+              {/* Name Field */}
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Enter your name"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-black"
+                />
+              </div>
 
-    {/* Form Fields */}
-    <div className="space-y-6">
-      {/* Name Field */}
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-          Name
-        </label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Enter your name"
-          className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all ${
-            formData.email ? 'text-black' : 'text-white'
-          }`}
-        />
-      </div>
+              {/* Email Field */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-black"
+                  required
+                />
+              </div>
 
-      {/* Email Field */}
-            <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-          Email
-        </label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Enter your email"
-          className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all ${
-            formData.email ? 'text-black' : 'text-white'
-          }`}
-         required
-        />
-      </div>
+              {/* Book Now Button */}
+              <button
+                onClick={() => setIsOpen(true)}
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+              >
+                Book Now
+              </button>
 
-
-      {/* Book Now Button */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
-      >
-        Book Now
-      </button>
-
-      {/* Share Icon */}
-      <div className="flex justify-center items-center mt-4">
-        <button
-          onClick={() => alert("Share this page!")} // Add share functionality
-          className="flex items-center text-gray-600 hover:text-blue-600 transition-all"
-        >
-          <FaShareAlt className="mr-2" />
-          <span className="text-sm font-medium">Share this offer</span>
-        </button>
-      </div>
-    </div>
-  </motion.div>
-</div>
+              {/* Share Icon */}
+              <div className="flex justify-center items-center mt-4">
+                <button
+                  onClick={() => alert("Share this page!")} // Add share functionality
+                  className="flex items-center text-gray-600 hover:text-blue-600 transition-all"
+                >
+                  <FaShareAlt className="mr-2" />
+                  <span className="text-sm font-medium">Share this offer</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
 
       {/* Modal */}
-      
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="bg-black bg-opacity-50 fixed inset-0"></div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+          className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md z-50"
+        >
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Complete Your Booking</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Mobile Number */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
+              <input
+                type="tel"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                placeholder="Enter your mobile number"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+
+            {/* Check-In Date */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Check-In Date</label>
+              <input
+                type="date"
+                name="checkInDate"
+                value={formData.checkInDate}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+
+            {/* Check-Out Date */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Check-Out Date</label>
+              <input
+                type="date"
+                name="checkOutDate"
+                value={formData.checkOutDate}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+
+            {/* No. of Persons */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">No. of Persons</label>
+              <input
+                type="number"
+                name="noOfPersons"
+                value={formData.noOfPersons}
+                onChange={handleChange}
+                placeholder="Enter number of persons"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+
+            {/* No. of Rooms */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">No. of Rooms</label>
+              <input
+                type="number"
+                name="noOfRooms"
+                value={formData.noOfRooms}
+                onChange={handleChange}
+                placeholder="Enter number of rooms"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+
+            {/* Room Type Radio Buttons */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Room Type</label>
+              <div className="flex gap-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="roomType"
+                    value="Executive"
+                    checked={formData.roomType === "Executive"}
+                    onChange={handleChange}
+                    className="focus:ring-blue-500"
+                  />
+                  <span className="ml-2 text-black">Executive Room</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="roomType"
+                    value="Deluxe"
+                    checked={formData.roomType === "Deluxe"}
+                    onChange={handleChange}
+                    className="focus:ring-blue-500"
+                  />
+                  <span className="ml-2 text-black">Deluxe Room</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Complimentary Breakfast and Free Wi-Fi */}
+            <p className="text-sm text-gray-600">
+              Complimentary breakfast will be provided.
+            </p>
+            <p className="text-sm text-gray-600">
+              Free Wi-Fi is available in all rooms.
+            </p>
+
+            {/* Coupon Code */}
+            <div className="flex gap-2">
+              <input
+                type="text"
+                name="coupon"
+                value={formData.coupon}
+                onChange={handleChange}
+                placeholder="Enter coupon code"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={applyCoupon}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                Apply
+              </button>
+            </div>
+
+            {/* Total Price */}
+            <p className="text-lg font-semibold text-gray-800">Total Price: ₹{totalPrice}</p>
+
+            {/* Confirm Booking Button */}
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+            >
+              Confirm Booking
+            </button>
+          </form>
+
+          {/* Close Button */}
+          <button
+            onClick={() => setIsOpen(false)}
+            className="mt-4 w-full bg-gray-500 text-white py-2 rounded-md hover:bg-gray-600"
+          >
+            Close
+          </button>
+        </motion.div>
+      </Dialog>
     </div>
   );
 };
