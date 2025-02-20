@@ -1,5 +1,5 @@
 import React from "react";
-import { FaSwimmingPool, FaWifi, FaTv, FaSnowflake, FaBatteryFull, FaFire } from "react-icons/fa";
+import { FaSwimmingPool, FaWifi, FaTv, FaSnowflake, FaBatteryFull, FaFire, FaUtensils } from "react-icons/fa";
 
 const Amenities = () => {
   return (
@@ -57,7 +57,15 @@ const Amenities = () => {
               </div>
               <h3 className="mt-2 text-lg font-semibold text-gray-800">Power Backup</h3>
             </div>
+          {/* Free Breakfast  */}
+            <div className="text-center">
+      <div className="flex justify-center">
+        <FaUtensils className="text-4xl text-orange-500" />
+      </div>
+      <h3 className="mt-2 text-lg font-semibold text-gray-800">Free Breakfast</h3>
+    </div>
           </div>
+         
         </div>
       </div>
     </div>
