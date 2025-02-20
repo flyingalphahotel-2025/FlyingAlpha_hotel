@@ -78,7 +78,7 @@ const HotelBookingForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
+    <div className="py-5 bg-gray-100 flex justify-center items-center p-4">
       <div className="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-lg shadow-lg overflow-hidden">
         {/* Left Side - Image Slider and Thumbnails */}
         <div className="w-full md:w-1/2 p-6">
@@ -227,74 +227,7 @@ const HotelBookingForm = () => {
       </div>
 
       {/* Modal */}
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-black bg-opacity-50 fixed inset-0"></div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
-          className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md z-50"
-        >
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Complete Your Booking</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="tel"
-              name="mobile"
-              value={formData.mobile}
-              onChange={handleChange}
-              placeholder="Mobile Number"
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              required
-            />
-            <input
-              type="date"
-              name="checkInDate"
-              value={formData.checkInDate}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              required
-            />
-            <input
-              type="date"
-              name="checkOutDate"
-              value={formData.checkOutDate}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              required
-            />
-            <div className="flex gap-2">
-              <input
-                type="text"
-                name="coupon"
-                value={formData.coupon}
-                onChange={handleChange}
-                placeholder="Coupon Code"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="button"
-                onClick={applyCoupon}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              >
-                Apply
-              </button>
-            </div>
-            <p className="text-lg font-semibold text-gray-800">Total Price: ₹{totalPrice}</p>
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
-            >
-              Confirm Booking
-            </button>
-          </form>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="mt-4 w-full bg-gray-500 text-white py-2 rounded-md hover:bg-gray-600"
-          >
-            Close
-          </button>
-        </motion.div>
-      </Dialog>
+      
     </div>
   );
 };
