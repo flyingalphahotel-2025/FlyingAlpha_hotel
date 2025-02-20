@@ -5,11 +5,14 @@ import Link from "next/link";
 
 const Footer = () => {
   const images = [
-    "/Hotels/Bedroom1.jpg",
-    "/Hotels/Bedroom4.jpg",
+    "/Hotels/building.jpg",
+    "/Hotels/gate2.jpeg",
     "/Hotels/gate.jpg",
     "/Hotels/Reception.jpeg",
+    "/Hotels/gallery.jpeg",
     "/Hotels/Bedroom2.jpg",
+    "/Hotels/Bedroom1.jpg",
+    "/Hotels/Bedroom4.jpg",
   ];
 
   return (
