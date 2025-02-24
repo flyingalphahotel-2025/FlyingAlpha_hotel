@@ -1,20 +1,23 @@
-import connectDB from "@/Lib/dbConnect"
+import connectDB from "@/Lib/dbConnect";
 import { NextResponse } from "next/server";
 
-export const POST = async(req) => {
-    try {
-    console.log("Connecting to the database ........")
-    connectDB();
-    console.log("Connected to the database .......")
+export const POST = async (req) => {
+  try {
+    console.log("Connecting to the database ........");
+    await connectDB(); // Ensure the database connection is awaited
+    console.log("Connected to the database .......");
 
-    console.log("Parsing request body.....")
-    const body = req.json();
+    console.log("Parsing request body.....");
+    const body = await req.json(); // Await the parsing of the request body
     console.log(body);
-    await NextResponse.json({message : "paresed the body " }, {status: 200})
-    } catch (error) {
-        console.error("Error processing request:", error);
-    return NextResponse.json({ message: "Error processing request", error: error.message }, { status: 500 });
-    }
 
-    
-}
+    // Return the response directly
+    return NextResponse.json({ message: "Parsed the body" }, { status: 200 });
+  } catch (error) {
+    console.error("Error processing request:", error);
+    return NextResponse.json(
+      { message: "Error processing request", error: error.message },
+      { status: 500 }
+    );
+  }
+};
