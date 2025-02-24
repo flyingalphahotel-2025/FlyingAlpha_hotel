@@ -1,7 +1,9 @@
 import connectDB from "@/Lib/dbConnect";
 import bookingModels from "@/models/bookingModels";
-import userModel from "@/models/userModel";
+import userModels from "@/models/userModels";
 import { NextResponse } from "next/server";
+
+
 
 export const POST = async (req) => {
     try {
@@ -13,10 +15,10 @@ export const POST = async (req) => {
         const body = await req.json();
         console.log("Request Body:", body);
 
-        const { name, email, mobile, checkInDate, checkOutDate, noOfPersons, noOfRooms, roomType, price } = body;
+        const { name, email, mobile, checkInDate, checkOutDate, noOfPersons, noOfRooms, roomType, totalPrice } = body;
 
         // Validate required fields
-        if (!name || !email || !mobile || !checkInDate || !checkOutDate || !noOfPersons || !noOfRooms || !roomType || !price) {
+        if (!name || !email || !mobile || !checkInDate || !checkOutDate || !noOfPersons || !noOfRooms || !roomType || !totalPrice) {
             return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
         }
 
@@ -27,11 +29,11 @@ export const POST = async (req) => {
         }
 
         console.log("Checking if user exists...");
-        let user = await userModel.findOne({ $or: [{ email }, { mobile }] });
+        let user = await userModels.findOne({ $or: [{ email }, { mobile }] });
 
         if (!user) {
             console.log("Creating new user...");
-            user = new userModel({ name, email, mobile });
+            user = new userModels({ name, email, mobile });
             await user.save();
             console.log("User created successfully:", user);
         } else {
@@ -46,7 +48,7 @@ export const POST = async (req) => {
             noOfPersons: parseInt(noOfPersons),
             noOfRooms: parseInt(noOfRooms),
             roomType,
-            price: parseFloat(price),
+            price: parseFloat(totalPrice),
         });
 
         console.log("Saving booking to database...");
