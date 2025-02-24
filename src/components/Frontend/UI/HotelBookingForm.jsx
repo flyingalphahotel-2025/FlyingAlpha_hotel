@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import { FaChevronDown, FaChevronUp, FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
-import { FaShareAlt } from "react-icons/fa"; // Import the share icon
+import { FaShareAlt } from "react-icons/fa";
 
 const HotelBookingForm = () => {
   const [formData, setFormData] = useState({
@@ -32,11 +32,33 @@ const HotelBookingForm = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState("");
-  const [totalPrice, setTotalPrice] = useState(4065);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [savings, setSavings] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showAll, setShowAll] = useState(false);
 
+  // Function to calculate total price
+  const calculateTotalPrice = () => {
+    const { roomType, noOfPersons, noOfRooms } = formData;
+    let basePrice = 0;
+    let extraPersonCharge = 0;
+
+    if (roomType === "Executive") {
+      basePrice = noOfPersons <= 2 ? 1200 : 1600; // ₹1200 for single/double, ₹1600 for extra persons
+      extraPersonCharge = noOfPersons > 2 ? (noOfPersons - 2) * 600 : 0; // ₹600 per extra person
+    } else if (roomType === "Deluxe") {
+      basePrice = noOfPersons <= 2 ? 1600 : 1800; // ₹1600 for single/double, ₹1800 for extra persons
+      extraPersonCharge = noOfPersons > 2 ? (noOfPersons - 2) * 600 : 0; // ₹600 per extra person
+    }
+
+    const total = (basePrice + extraPersonCharge) * noOfRooms;
+    setTotalPrice(total);
+  };
+
+  // Recalculate total price whenever form data changes
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [formData.roomType, formData.noOfPersons, formData.noOfRooms]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,11 +69,11 @@ const HotelBookingForm = () => {
     if (formData.coupon === "WELCOME75") {
       setAppliedCoupon("WELCOME75");
       setSavings(1708);
-      setTotalPrice(1138);
+      setTotalPrice(totalPrice - 1708); // Apply discount
     } else {
       setAppliedCoupon("");
       setSavings(0);
-      setTotalPrice(4065);
+      calculateTotalPrice(); // Reset to original price
     }
   };
 
@@ -82,7 +104,6 @@ const HotelBookingForm = () => {
 
   const imagesToShow = showAll ? images : images.slice(0, 4);
 
-
   return (
     <div className="py-5 bg-gray-100 flex justify-center items-center p-4">
       <div className="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-lg shadow-lg overflow-hidden">
@@ -91,49 +112,49 @@ const HotelBookingForm = () => {
           <div className="flex flex-col md:flex-row gap-4">
             {/* Thumbnail Column (Desktop) */}
             <motion.div
-      className="hidden md:flex flex-col gap-4"
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      {imagesToShow.map((image, index) => (
-        <motion.div
-          key={index}
-          className="w-20 h-20 overflow-hidden rounded-lg shadow-lg cursor-pointer"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setCurrentImageIndex(index)}
-        >
-          <Image
-            src={image}
-            alt={`Thumbnail ${index + 1}`}
-            width={80}
-            height={80}
-            className="object-cover w-full h-full"
-          />
-        </motion.div>
-      ))}
+              className="hidden md:flex flex-col gap-4"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              {imagesToShow.map((image, index) => (
+                <motion.div
+                  key={index}
+                  className="w-20 h-20 overflow-hidden rounded-lg shadow-lg cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setCurrentImageIndex(index)}
+                >
+                  <Image
+                    src={image}
+                    alt={`Thumbnail ${index + 1}`}
+                    width={80}
+                    height={80}
+                    className="object-cover w-full h-full"
+                  />
+                </motion.div>
+              ))}
 
-      {/* Show More / Show Less Button */}
-      {images.length > 4 && (
-        <button
-          onClick={() => setShowAll(!showAll)}
-          className="flex items-center justify-center mt-2 text-blue-500 hover:text-blue-700"
-        >
-          {showAll ? (
-            <>
-              <FaChevronUp className="mr-2" />
-              Show Less
-            </>
-          ) : (
-            <>
-              <FaChevronDown className="mr-2" />
-              Show More
-            </>
-          )}
-        </button>
-      )}
-    </motion.div>
+              {/* Show More / Show Less Button */}
+              {images.length > 4 && (
+                <button
+                  onClick={() => setShowAll(!showAll)}
+                  className="flex items-center justify-center mt-2 text-blue-500 hover:text-blue-700"
+                >
+                  {showAll ? (
+                    <>
+                      <FaChevronUp className="mr-2" />
+                      Show Less
+                    </>
+                  ) : (
+                    <>
+                      <FaChevronDown className="mr-2" />
+                      Show More
+                    </>
+                  )}
+                </button>
+              )}
+            </motion.div>
 
             {/* Preview Image Container */}
             <motion.div
@@ -227,19 +248,20 @@ const HotelBookingForm = () => {
               {/* Book Now Button */}
               <button
                 onClick={() => setIsOpen(true)}
-                disabled= {!formData.name || !formData.email}
+                disabled={!formData.name || !formData.email}
                 className={`w-full py-3 rounded-lg transition-all shadow-lg ${
                   formData.name && formData.email
                     ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}              >
+                }`}
+              >
                 Book Now
               </button>
 
               {/* Share Icon */}
               <div className="flex justify-center items-center mt-4">
                 <button
-                  onClick={() => alert("Share this page!")} // Add share functionality
+                  onClick={() => alert("Share this page!")}
                   className="flex items-center text-gray-600 hover:text-blue-600 transition-all"
                 >
                   <FaShareAlt className="mr-2" />
@@ -366,6 +388,7 @@ const HotelBookingForm = () => {
             <p className="text-sm text-gray-600">
               Free Wi-Fi is available in all rooms.
             </p>
+
             {/* Total Price */}
             <p className="text-lg font-semibold text-gray-800">Total Price: ₹{totalPrice}</p>
 
