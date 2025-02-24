@@ -57,9 +57,13 @@ const HotelBookingForm = () => {
   };
 
   // Recalculate total price whenever form data changes
-  useEffect(() => {
-    calculateTotalPrice();
-  }, [formData.roomType, formData.noOfPersons, formData.noOfRooms]);
+useEffect(() => {
+  calculateTotalPrice();
+  setFormData((prevData) => ({
+    ...prevData,
+    totalPrice: totalPrice, // Update total price in form data
+  }));
+}, [formData.roomType, formData.noOfPersons, formData.noOfRooms, totalPrice]); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -389,12 +393,10 @@ const HotelBookingForm = () => {
               Free Wi-Fi is available in all rooms.
             </p>
 
-            {/* Total Price */}
-            <p className="text-lg font-semibold text-gray-800">
-              Total Price: ₹{totalPrice} ({formData.totalPrice})
-
-              </p>
-
+           {/* Total Price */}
+        <p className="text-lg font-semibold text-gray-800">
+          Total Price: ₹{totalPrice}
+        </p>
             {/* Confirm Booking Button */}
             <button
               type="submit"
