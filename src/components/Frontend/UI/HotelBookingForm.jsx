@@ -16,7 +16,8 @@ const HotelBookingForm = () => {
     coupon: "",
     noOfPersons: "",
     noOfRooms: "",
-    roomType: "Executive", // Default room type
+    roomType: "Executive", 
+    totalPrice: ""
   });
 
   const images = [
@@ -86,7 +87,6 @@ const HotelBookingForm = () => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      alert(data.message);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -390,7 +390,10 @@ const HotelBookingForm = () => {
             </p>
 
             {/* Total Price */}
-            <p className="text-lg font-semibold text-gray-800">Total Price: ₹{totalPrice}</p>
+            <p className="text-lg font-semibold text-gray-800">
+              Total Price: ₹{totalPrice} ({formData.totalPrice})
+
+              </p>
 
             {/* Confirm Booking Button */}
             <button

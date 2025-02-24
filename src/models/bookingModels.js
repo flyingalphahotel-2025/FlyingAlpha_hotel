@@ -26,6 +26,10 @@ const bookingSchema = new mongoose.Schema({
         type: String,
         enum: ["Executive Room", "Deluxe Room"],
         required: true
+    },
+    price:{
+        type : Number,
+        requird : true
     }
 }, { timestamps: true });
 
