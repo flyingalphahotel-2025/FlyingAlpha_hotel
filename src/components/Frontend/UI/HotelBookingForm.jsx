@@ -204,6 +204,7 @@ const HotelBookingForm = () => {
                   onChange={handleChange}
                   placeholder="Enter your name"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-black"
+                  required
                 />
               </div>
 
@@ -226,8 +227,12 @@ const HotelBookingForm = () => {
               {/* Book Now Button */}
               <button
                 onClick={() => setIsOpen(true)}
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
-              >
+                disabled= {!formData.name || !formData.email}
+                className={`w-full py-3 rounded-lg transition-all shadow-lg ${
+                  formData.name && formData.email
+                    ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}              >
                 Book Now
               </button>
 
@@ -361,26 +366,6 @@ const HotelBookingForm = () => {
             <p className="text-sm text-gray-600">
               Free Wi-Fi is available in all rooms.
             </p>
-
-            {/* Coupon Code */}
-            <div className="flex gap-2">
-              <input
-                type="text"
-                name="coupon"
-                value={formData.coupon}
-                onChange={handleChange}
-                placeholder="Enter coupon code"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="button"
-                onClick={applyCoupon}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              >
-                Apply
-              </button>
-            </div>
-
             {/* Total Price */}
             <p className="text-lg font-semibold text-gray-800">Total Price: ₹{totalPrice}</p>
 
