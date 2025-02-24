@@ -20,7 +20,7 @@ const AdminLoginForm = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/admin/auth', {
+      const response = await axios.post('/api/auth/signIn', {
         email,
         password,
         rememberMe,
