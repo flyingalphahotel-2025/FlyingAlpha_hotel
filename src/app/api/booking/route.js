@@ -17,23 +17,16 @@ export const POST = async (req) => {
 
         const { name, email, mobile, checkInDate, checkOutDate, noOfPersons, noOfRooms, roomType, totalPrice } = body;
 
-        // Validate required fields
-        if (!name || !email || !mobile || !checkInDate || !checkOutDate || !noOfPersons || !noOfRooms || !roomType || !totalPrice) {
-            return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
-        }
-
-        // Validate roomType
-        const validRoomTypes = ["Executive Room", "Deluxe Room"];
-        if (!validRoomTypes.includes(roomType)) {
-            return NextResponse.json({ message: "Invalid room type" }, { status: 400 });
-        }
 
         console.log("Checking if user exists...");
         let user = await userModels.findOne({ $or: [{ email }, { mobile }] });
 
         if (!user) {
             console.log("Creating new user...");
-            user = new userModels({ name, email, mobile });
+            user = new userModels({
+                fullName: name, 
+                 email, 
+                 mobileNumber: mobile });
             await user.save();
             console.log("User created successfully:", user);
         } else {
