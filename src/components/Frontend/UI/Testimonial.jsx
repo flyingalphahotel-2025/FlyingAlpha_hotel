@@ -1,5 +1,5 @@
 import React from "react";
-import { FaUserFriends, FaChild, FaUtensils, FaHotel, FaBroom } from "react-icons/fa";
+import { FaUserFriends, FaChild, FaUtensils, FaHotel, FaBroom, FaCoffee } from "react-icons/fa";
 
 const Testimonial = () => {
   return (
@@ -70,6 +70,11 @@ const features = [
     icon: <FaUtensils className="drop-shadow-lg" />,
     title: "Food Available",
     description: "Delicious multi-cuisine meals available 24/7.",
+  },
+  {
+    icon: <FaCoffee className="drop-shadow-lg" />,
+    title: "Free Breakfast",
+    description: "Enjoy a complimentary breakfast from 8 AM to 10 PM.",
   },
 ];
 
