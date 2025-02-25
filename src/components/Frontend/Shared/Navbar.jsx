@@ -21,7 +21,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="shrink-0">
             <Link href="#" className="flex">
-              <span className="text-2xl pinyon-script-regular text-white">Flying Alpha Hotel</span>
+              <span className="text-3xl pinyon-script-regular text-white font-bold">Flying Alpha Hotel</span>
             </Link>
           </div>
 
