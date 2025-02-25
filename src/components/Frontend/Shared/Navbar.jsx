@@ -131,7 +131,7 @@ const Navbar = () => {
 
 
       {/* Mobile CTA Button */}
-    <div className="relative md:hidden flex items-center justify-center group">
+    <div className="relative md:hidden flex items-center justify-center group w-[50%]">
       {/* Animated gradient border */}
       <motion.div
         className="absolute transition-all duration-200 rounded-full -inset-px bg-gradient-to-r from-[#FF0080] to-blue-600 group-hover:shadow-lg group-hover:shadow-[#FF0080]/100"
