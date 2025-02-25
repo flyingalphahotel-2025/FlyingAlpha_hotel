@@ -42,37 +42,37 @@ const Footer = () => {
         </div>
 
         {/* Middle Section - Quick Links */}
+        {/* Middle Section - Quick Links */}
         <div>
           <h3 className="text-lg md:text-xl font-bold mb-4">Quick Links</h3>
           <ul className="space-y-2">
             <li>
-              <Link href="/" className="hover:text-yellow-500">
+              <Link href="/" className="hover:text-[#FF0080] hover:underline">
                 HOME
               </Link>
             </li>
             <li>
-              <Link href="/aboutUs" className="hover:text-yellow-500">
+              <Link href="/aboutUs" className="hover:text-[#FF0080] hover:underline">
                 ABOUT US
               </Link>
             </li>
             <li>
-              <Link href="/contactUs" className="hover:text-yellow-500">
+              <Link href="/contactUs" className="hover:text-[#FF0080] hover:underline">
                 CONTACT US
               </Link>
             </li>
             <li>
-              <Link href="/events" className="hover:text-yellow-500">
+              <Link href="/events" className="hover:text-[#FF0080] hover:underline">
                 EVENTS
               </Link>
             </li>
             <li>
-              <Link href="/bookNow" className="hover:text-yellow-500">
+              <Link href="/bookNow" className="hover:text-[#FF0080] hover:underline">
                 BOOK NOW
               </Link>
             </li>
           </ul>
         </div>
-
         {/* Right Section - Gallery */}
         <div>
           <h3 className="text-lg md:text-xl font-bold mb-4">Gallery</h3>
