@@ -4,37 +4,59 @@ import React, { useState } from 'react';
 
 const FAQs = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [visibleCount , setVisibleCount] = useState(5);
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const showMore = () => {
+    setVisibleCount((prevCount) => prevCount + 5)
+  }
+
   const faqs = [
     {
-      question: 'What products does CleanVeda offer?',
-      answer: 'CleanVeda specializes in plant-based Ayurvedic supplements designed to enhance mental performance and overall well-being. Our flagship product, BrainBite™ Smart IQ, is formulated to improve focus, cognitive energy, and mental clarity.',
+      question: 'Is Flying Alpha Hotel couples friendly?',
+      answer: 'Yes, Flying Alpha Hotel offers a private and comfortable stay with premium amenities, making it ideal for couples.',
     },
     {
-      question: 'Is BrainBite™ Smart IQ safe for children?',
-      answer: 'Yes, BrainBite™ Smart IQ is 100% plant-based and safe for children. It is designed to support learning, focus, and mental clarity in young minds.',
+      question: 'What dining options are available at the hotel?',
+      answer: 'Guests can enjoy delicious multi-cuisine meals available 24/7. Additionally, a complimentary breakfast is served daily from 8 AM to 10 PM.',
     },
     {
-      question: 'What is your shipping policy?',
-      answer: 'We offer free shipping on all orders. Once your order is placed, it will be processed and shipped promptly.',
+      question: 'What types of rooms are available at Flying Alpha Hotel?',
+      answer: 'We offer two types of rooms: Executive and Deluxe, both designed to provide comfort and elegance for our guests.',
     },
     {
-      question: 'Do you provide international shipping?',
-      answer: 'Currently, we only ship within India. We\'ll be sure to announce any expansion plans on our website.',
+      question: 'Is there an extra charge for additional guests in a room?',
+      answer: 'Yes, for every extra person after two in a room, a charge of ₹600 per person will be applied.',
     },
     {
-      question: 'What payment methods do you accept?',
-      answer: 'We offer a variety of secure payment options, including credit cards (Visa & Mastercard), debit cards (Visa Electron & Maestro), net banking, UPI, and cash on delivery (COD).',
+      question: 'Is the hotel suitable for families with children?',
+      answer: 'Absolutely. Flying Alpha Hotel is family-friendly, offering spacious rooms and family suites. We also provide safe play areas and special services tailored for children.',
+    },
+    {
+      question: 'Does the hotel offer event and party arrangements?',
+      answer: 'Yes, we provide exclusive event and party arrangements, allowing guests to celebrate special moments with personalized services.',
+    },
+    {
+      question: 'What amenities can guests expect during their stay?',
+      answer: 'Guests can enjoy a range of amenities, including air conditioning (AC), free Wi-Fi, television, geyser, power backup, and daily housekeeping services, ensuring a comfortable and convenient stay.',
+    },
+    {
+      question: 'How can I book a room at Flying Alpha Hotel?',
+      answer: 'To book a room, visit our website and fill out the reservation form with your name and email. Alternatively, you can contact our support team at support@hotelflyingalpha.com.',
+    },
+    {
+      question: 'What are some nearby attractions to the hotel?',
+      answer: 'Nearby attractions include Golghar, Patna Museum, and Buddha Smriti Park. For dining, options like Annapurna Bhandar, Bikaner Sweet Shop, and Giani’s are in close proximity.',
     },
     {
       question: 'How can I contact customer support?',
-      answer: 'Our customer support team is available 24/7 to assist you. You can reach us at support@cleanveda.com or call us at +91 9876543210.',
+      answer: 'Our customer support team is available 24/7 to assist you. You can reach us at support@hotelflyingalpha.com.',
     },
   ];
+  
   
 
   return (
@@ -48,7 +70,7 @@ const FAQs = () => {
           </div>
 
           <div className="max-w-3xl mx-auto mt-8 space-y-4 md:mt-16">
-            {faqs.map((faq, index) => (
+            {faqs.slice(0, visibleCount).map((faq, index) => (
               <div key={index} className="transition-all duration-200 bg-white border border-gray-200 shadow-lg cursor-pointer hover:bg-gray-50">
                 <button
                   type="button"
@@ -74,6 +96,17 @@ const FAQs = () => {
               </div>
             ))}
           </div>
+
+          {visibleCount < faqs.length && (
+            <div className="text-center mt-6">
+              <button
+                onClick={showMore}
+                className="px-6 py-3 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Show More
+              </button>
+            </div>
+          )}
 
           <p className="text-center text-gray-600 textbase mt-9">
             Didn’t find the answer you are looking for?{' '}
