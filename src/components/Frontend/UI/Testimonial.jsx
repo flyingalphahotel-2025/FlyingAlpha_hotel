@@ -1,5 +1,6 @@
 import React from "react";
 import { FaUserFriends, FaChild, FaUtensils, FaHotel, FaBroom, FaCoffee } from "react-icons/fa";
+import CustomTextButton from "./Reusable/CustomButton";
 
 const Testimonial = () => {
   return (
@@ -32,12 +33,8 @@ const Testimonial = () => {
 
         {/* Book Now Button */}
         <div className="mt-10 text-center">
-          <a
-            href="#"
-            className="px-6 py-3 text-lg font-bold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300"
-          >
-            Book Now
-          </a>
+        <CustomTextButton text="Reserve Your Stay at Hotel O Flying Alpha 🗓️" href="/booking" />
+
         </div>
       </div>
     </section>

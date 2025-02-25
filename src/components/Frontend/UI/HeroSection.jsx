@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CustomTextButton from './Reusable/CustomButton';
 
 const HeroSection = () => {
   const images = [
@@ -60,15 +61,12 @@ const HeroSection = () => {
           Discover a world of elegance and comfort at FlyingAlpha Hotel. Enjoy luxurious rooms, world-class dining, and impeccable service tailored for your leisure or business needs.
         </motion.p>
 
-        <motion.button
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          onClick={() => window.location.href = "/booking"}
-          className="mt-6 px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none"
-        >
-          Book Now
-        </motion.button>
+        <div className=' my-4'>
+        <CustomTextButton text="Book Now" href="/booking" />
+
+        </div>
+
+
       </div>
     </div>
   );

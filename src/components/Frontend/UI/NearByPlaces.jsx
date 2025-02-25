@@ -1,5 +1,6 @@
 "use client"
 import { motion } from "framer-motion";
+import CustomTextButton from "./Reusable/CustomButton";
 
 const NearbyPlaces = () => {
   return (
@@ -69,21 +70,11 @@ const NearbyPlaces = () => {
       </div>
 
       {/* Hotel Link */}
-      <motion.div
+      <div
         className="text-center mt-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.6 }}
       >
-        <a
-          href="https://www.oyorooms.com/288558/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300"
-        >
-          Book Your Stay at Hotel O Flying Alpha 🏨
-        </a>
-      </motion.div>
+              <CustomTextButton text=" Book Your Stay at Hotel O Flying Alpha 🏨" href="/booking" />
+      </div>
     </div>
   );
 };
