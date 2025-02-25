@@ -115,9 +115,11 @@ const Footer = () => {
           </div>
           <p className="text-sm md:text-base">
             © All rights reserved 2025{" "}
-            <span className="font-bold text-[#FF0080]">
+            <Link href={"/"}>
+            <span className="font-bold text-[#FF0080] hover:underline cursor-pointer">
               Hotel O Flying Alpha
             </span>
+            </Link>
           </p>
         </div>
       </div>
