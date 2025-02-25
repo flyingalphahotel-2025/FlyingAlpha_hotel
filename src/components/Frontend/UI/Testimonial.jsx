@@ -8,7 +8,7 @@ const Testimonial = () => {
         {/* Heading */}
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl xl:text-5xl">
-            Why Choose <span className="text-blue-600">Flying Alpha Hotel?</span>
+            Why Choose <span className="text-[#FF0080]">Flying Alpha Hotel?</span>
           </h2>
           <p className="mt-4 text-lg text-gray-600">
             Experience comfort, luxury, and the best hospitality for all.

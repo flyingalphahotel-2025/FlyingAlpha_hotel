@@ -48,7 +48,7 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-3xl md:text-5xl font-bold text-white"
         >
-          Experience Luxury at FlyingAlpha Hotel
+          Experience Luxury at <span className='text-[#FF0080]'>FlyingAlpha Hotel</span>
         </motion.h1>
 
         <motion.p

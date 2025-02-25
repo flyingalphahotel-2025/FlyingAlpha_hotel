@@ -8,7 +8,7 @@ const WhyChooseUs = () => {
       <div className="grid md:grid-cols-2 gap-10 items-center">
         {/* Left Side Content */}
         <div>
-          <h3 className="text-orange-500 font-bold text-lg uppercase">
+          <h3 className="text-[#FF0080] font-bold text-lg uppercase">
             Why Choose Us
           </h3>
           <h2 className="text-3xl font-extrabold text-gray-900 mt-2">
@@ -21,7 +21,7 @@ const WhyChooseUs = () => {
           <div className="mt-6 space-y-6">
             {/* Feature 1 */}
             <div className="flex items-start space-x-4">
-              <div className="bg-orange-500 p-3 rounded-full text-white">
+              <div className="bg-[#FF0080] p-3 rounded-full text-white">
                 <FaSwimmer size={20} />
               </div>
               <div>
@@ -34,7 +34,7 @@ const WhyChooseUs = () => {
 
             {/* Feature 2 */}
             <div className="flex items-start space-x-4">
-              <div className="bg-orange-500 p-3 rounded-full text-white">
+              <div className="bg-[#FF0080] p-3 rounded-full text-white">
                 <FaShieldAlt size={20} />
               </div>
               <div>
@@ -47,7 +47,7 @@ const WhyChooseUs = () => {
 
             {/* Feature 3 */}
             <div className="flex items-start space-x-4">
-              <div className="bg-orange-500 p-3 rounded-full text-white">
+              <div className="bg-[#FF0080] p-3 rounded-full text-white">
                 <FaCalendarAlt size={20} />
               </div>
               <div>
@@ -71,7 +71,7 @@ const WhyChooseUs = () => {
             height={350} // Set your actual image height
           />
           {/* Badge */}
-          <div className="absolute top-0 right-0 bg-orange-500 text-white px-4 py-2 rounded-bl-lg text-sm font-bold flex items-center">
+          <div className="absolute top-0 right-0 bg-[#FF0080] text-white px-4 py-2 rounded-bl-lg text-sm font-bold flex items-center">
             <FaStar className="mr-2" />
             Couples Friendly
           </div>
