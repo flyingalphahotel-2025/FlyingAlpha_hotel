@@ -34,6 +34,11 @@ const Footer = () => {
           <p className="mt-4 text-sm md:text-base  text-[#FF0080]">
             support@hotelflyingalpha.com
           </p>
+          <p className="mt-2 text-base md:text-lg text-blue-500">
+          <a href="tel:7909065928" className="hover:underline">+91 7909065928</a> | 
+          <a href="tel:9661799667" className="hover:underline ml-2">+91 9661799667</a>
+         </p>
+
         </div>
 
         {/* Middle Section - Quick Links */}
