@@ -7,8 +7,6 @@ const HeroSection = () => {
   const images = [
     "/Hotels/Bedroom1.jpg",
     "/Hotels/Bedroom2.jpg",
-    "/Hotels/Bedroom3.jpg",
-    "/Hotels/Bedroom4.jpg",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
