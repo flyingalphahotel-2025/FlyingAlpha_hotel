@@ -31,7 +31,7 @@ const Footer = () => {
           <p className="text-sm md:text-base text-white">
             Plot No 31/B Rajeev Nagar Main Road, Opposite Ruban Singh Market, <br /> Near Rajdhani Kirana Store, Road No Zero, Patna
           </p>
-          <p className="mt-4 text-base md:text-lg  text-[#FF0080]">
+          <p className="mt-4 text-base md:text-lg  text-blue-500">
             support@hotelflyingalpha.com
           </p>
           <p className="mt-2 text-base md:text-lg text-blue-500">

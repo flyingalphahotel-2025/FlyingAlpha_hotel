@@ -24,7 +24,7 @@ const CustomTextButton = ({ text, href }) => {
       {/* Button */}
       <Link
         href={href} // Dynamic href
-        className="relative inline-flex items-center justify-center px-6 py-2 text-base font-normal text-white  border border-transparent rounded-full"
+        className="relative inline-flex items-center justify-center px-6 py-2 text-sm md:text-base font-normal text-white  border border-transparent rounded-full"
         role="button"
       >
         {text} {/* Dynamic text */}
