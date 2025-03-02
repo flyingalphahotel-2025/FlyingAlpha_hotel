@@ -43,7 +43,7 @@ const SignUpForm = () => {
         setConfirmPassword('');
 
         console.log("Redirecting to the login page");
-        router.push('/auth/login');
+        router.push('/admin/auth');
         console.log("Redirected");
       }
     } catch (error) {
@@ -213,11 +213,12 @@ const SignUpForm = () => {
           className="flex justify-between mt-6 text-sm text-gray-600 font-semibold"
         >
           <a
-            href="/auth/login"
-            className="hover:text-blue-700 hover:underline transition font-semibold"
+            href="/admin/auth"
+            className="  transition font-semibold"
           >
             Already have an account? 
-            <span className='font-semibold text-blue-500'>  Login here
+            <span className='font-semibold text-blue-500 hover:underline'> 
+               Login here
                 </span>
           </a>
         </motion.div>

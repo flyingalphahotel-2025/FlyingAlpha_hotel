@@ -166,7 +166,7 @@ const AdminLoginForm = () => {
           Forgot your password?
         </a>
         <a
-          href="/auth/register"
+          href="/admin/auth/signUp"
           className="hover:text-blue-700 hover:underline transition"
         >
           Register here
