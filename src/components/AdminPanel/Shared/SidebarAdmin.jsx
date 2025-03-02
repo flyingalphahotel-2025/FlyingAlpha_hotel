@@ -17,17 +17,21 @@ const SidebarAdmin = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('/api/admin/auth/logout', {
+      const response = await fetch('/api/auth/logout', {
         method: 'POST',
       });
       const data = await response.json();
+
       if (response.ok) {
-        router.push('/');
+        toast.success('Logout successful! Redirecting...');
+        setTimeout(() => {
+          router.push('/');
+        }, 1500); // Redirect after 1.5 seconds
       } else {
-        alert(`Logout failed: ${data.message}`);
+        toast.error(`Logout failed: ${data.message}`);
       }
     } catch (error) {
-      alert(`Logout failed: ${error.message}`);
+      toast.error(`Logout failed: ${error.message}`);
     }
   };
 
