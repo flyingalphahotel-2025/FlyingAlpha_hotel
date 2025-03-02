@@ -67,6 +67,12 @@ const Navbar = () => {
             >
               FAQs
             </Link>
+            <Link
+              href={"/BookNow"}
+              className="text-base font-normal text-white transition-all duration-200 hover:text-[#FF0080] hover:underline"
+            >
+              Book Now
+            </Link>
           </nav>
 
 
@@ -127,6 +133,12 @@ const Navbar = () => {
       className="text-base font-normal text-white transition-all duration-200 hover:text-[#FF0080]"
     >
       FAQs
+    </Link>
+    <Link
+      href="/BookNow"
+      className="text-base font-normal text-white transition-all duration-200 hover:text-[#FF0080]"
+    >
+      Book Now
     </Link>
 
 

@@ -67,7 +67,7 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href="/bookNow" className="hover:text-[#FF0080] hover:underline">
+              <Link href="/BookNow" className="hover:text-[#FF0080] hover:underline">
                 BOOK NOW
               </Link>
             </li>
