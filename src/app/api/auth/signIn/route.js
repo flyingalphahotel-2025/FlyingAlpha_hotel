@@ -1,4 +1,5 @@
 import connectDB from '@/Lib/dbConnect';
+import userModels from '@/models/userModels';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
