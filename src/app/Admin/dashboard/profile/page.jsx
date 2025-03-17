@@ -16,7 +16,7 @@ export default function ProfileSettings() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
-    <div className="max-w-full mx-auto p-4 bg-gray-50 rounded-lg w-full h-[90vh] overflow-y-auto max-h-[86vh] custom-scrollbar flex flex-col">
+    <div className="max-w-full mx-auto p-4 bg-gray-50 my-10 w-full  overflow-y-auto max-h-[86vh] custom-scrollbar flex flex-col">
       <div className="bg-white p-6 rounded-lg shadow-md">
       <h1 className="text-2xl font-semibold mb-4 text-black">Profile Settings</h1>
         {/* Profile Picture and Info */}
