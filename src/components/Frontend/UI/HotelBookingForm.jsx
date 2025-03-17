@@ -228,7 +228,7 @@ useEffect(() => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Enter your name"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-black"
+                  className="w-full px-4 py-3 border  border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-black"
                   required
                 />
               </div>
@@ -290,14 +290,14 @@ useEffect(() => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Mobile Number */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1 ">Mobile Number</label>
               <input
                 type="tel"
                 name="mobile"
                 value={formData.mobile}
                 onChange={handleChange}
                 placeholder="Enter your mobile number"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
                 required
               />
             </div>
@@ -310,7 +310,7 @@ useEffect(() => {
                 name="checkInDate"
                 value={formData.checkInDate}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
                 required
               />
             </div>
@@ -323,7 +323,7 @@ useEffect(() => {
                 name="checkOutDate"
                 value={formData.checkOutDate}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
                 required
               />
             </div>
@@ -337,7 +337,7 @@ useEffect(() => {
                 value={formData.noOfPersons}
                 onChange={handleChange}
                 placeholder="Enter number of persons"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
                 required
               />
             </div>
@@ -351,7 +351,7 @@ useEffect(() => {
                 value={formData.noOfRooms}
                 onChange={handleChange}
                 placeholder="Enter number of rooms"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
                 required
               />
             </div>
