@@ -88,20 +88,20 @@ const SidebarAdmin = () => {
           </Link>
 
           <SectionTitle title="Policy" />
-          <Link href="/admin/dashboard/policy/terms" passHref>
+          <Link href="/admin/dashboard/PrivacyPolicy" passHref>
             <SidebarItem
               icon={<GiOpenBook />}
-              label="Terms and Conditions"
-              selected={selectedItem === 'Terms and Conditions'}
-              onClick={() => setSelectedItem('Terms and Conditions')}
+              label="PrivacyPolicy"
+              selected={selectedItem === 'PrivacyPolicy'}
+              onClick={() => setSelectedItem('PrivacyPolicy')}
             />
           </Link>
-          <Link href="/admin/dashboard/policy/privacy" passHref>
+          <Link href="/admin/dashboard/TermsAndCondition" passHref>
             <SidebarItem
               icon={<FaBook />}
-              label="Privacy Policy"
-              selected={selectedItem === 'Privacy Policy'}
-              onClick={() => setSelectedItem('Privacy Policy')}
+              label="TermsAndCondition"
+              selected={selectedItem === 'TermsAndCondition'}
+              onClick={() => setSelectedItem('TermsAndCondition')}
             />
           </Link>
 

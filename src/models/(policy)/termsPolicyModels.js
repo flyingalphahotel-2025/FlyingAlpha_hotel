@@ -1,12 +1,16 @@
 import mongoose from "mongoose";
 
-const termsPolicySchema = mongoose.Schema({
-    content :{
-        type:mongoose.Schema.Mixed,
-        required: true
-    }
-},{
-    timestamps:true
-})
+// Define the schema
+const termsPolicySchema = new mongoose.Schema({
+  content: {
+    type: mongoose.Schema.Types.Mixed, // Correctly define the type as Mixed
+    required: true,
+  },
+}, {
+  timestamps: true, // Add timestamps for createdAt and updatedAt
+});
 
-export default mongoose.models.TermsPolicy || mongoose.model('TermsPolicy' , termsPolicySchema)
+// Check if the model already exists to avoid recompiling it
+const TermsPolicy = mongoose.models.TermsPolicy || mongoose.model("TermsPolicy", termsPolicySchema);
+
+export default TermsPolicy;
