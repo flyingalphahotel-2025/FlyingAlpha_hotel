@@ -1,8 +1,8 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import Loader from '@/components/loader/loader';
 import DOMPurify from 'dompurify';
+import Loader from '@/components/Loader/loader';
 
 const Page = () => {
     const [data, setData] = useState(null); 

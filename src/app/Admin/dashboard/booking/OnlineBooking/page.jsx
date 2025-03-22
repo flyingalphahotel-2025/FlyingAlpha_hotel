@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Loader from "@/components/loader/loader";
 import { FaEye, FaPrint } from "react-icons/fa";
 // import GenerateInvoice from "@/components/adminPanel/ui/GenerateInvoice";
 import { FaTimes } from "react-icons/fa"; // Importing the React Icon for close
 import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader/loader";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
