@@ -3,8 +3,6 @@ import bookingModels from "@/models/bookingModels";
 import userModels from "@/models/userModels";
 import { NextResponse } from "next/server";
 
-
-
 export const POST = async (req) => {
     try {
         console.log("Connecting to the database...");
@@ -17,6 +15,14 @@ export const POST = async (req) => {
 
         const { name, email, mobile, checkInDate, checkOutDate, noOfPersons, noOfRooms, roomType, totalPrice } = body;
 
+        // Validate required fields
+        if (!name || !email || !mobile || !checkInDate || !checkOutDate || !noOfPersons || !noOfRooms || !roomType || !totalPrice) {
+            console.error("Missing required fields in request body");
+            return NextResponse.json(
+                { message: "All fields are required" },
+                { status: 400 }
+            );
+        }
 
         console.log("Checking if user exists...");
         let user = await userModels.findOne({ $or: [{ email }, { mobile }] });
@@ -24,9 +30,10 @@ export const POST = async (req) => {
         if (!user) {
             console.log("Creating new user...");
             user = new userModels({
-                fullName: name, 
-                 email, 
-                 mobileNumber: mobile });
+                fullName: name,
+                email,
+                mobileNumber: mobile,
+            });
             await user.save();
             console.log("User created successfully:", user);
         } else {
