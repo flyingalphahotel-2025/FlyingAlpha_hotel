@@ -67,3 +67,27 @@ export const POST = async (req) => {
         );
     }
 };
+
+// GET API to fetch all bookings with user data
+export const GET = async () => {
+    try {
+        console.log("Connecting to the database...");
+        await connectDB();
+        console.log("Connected to the database");
+
+        console.log("Fetching all bookings with user data...");
+        const bookings = await bookingModels.find().populate("user", "fullName email mobileNumber");
+        console.log("Bookings fetched successfully:", bookings);
+
+        return NextResponse.json(
+            { message: "Bookings fetched successfully", bookings },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.error("Error fetching bookings:", error);
+        return NextResponse.json(
+            { message: "Error fetching bookings", error: error.message },
+            { status: 500 }
+        );
+    }
+};
