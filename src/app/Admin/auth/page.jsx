@@ -18,28 +18,32 @@ const AdminLoginForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
       const response = await axios.post('/api/auth/signIn', {
         email,
         password,
         rememberMe,
       });
-
+  
       if (response.status === 200) {
         // Clear the form fields
         setEmail('');
         setPassword('');
         setRememberMe(false);
-
-        console.log("redirecting to the admin panel")
+  
+        console.log("redirecting to the admin panel");
         router.push('/admin/dashboard');
-        console.log("redirected")
-
+        console.log("redirected");
       }
     } catch (error) {
       console.error(error);
-      // Handle error (e.g., display a notification or message)
+      // Show an error toast if the login fails
+      if (error.response && error.response.status === 401) {
+        toast.error('Invalid email or password. Please try again.');
+      } else {
+        toast.error('An error occurred. Please try again later.');
+      }
     } finally {
       setLoading(false);
     }
