@@ -62,7 +62,7 @@ const SidebarAdmin = () => {
               onClick={() => setSelectedItem('Add Booking')}
             />
           </Link>
-          <Link href="/admin/dashboard/orders/online" passHref>
+          <Link href="/admin/dashboard/booking/OnlineBooking" passHref>
             <SidebarItem
               icon={<FaShoppingCart />}
               label="Online Booking"
