@@ -5,6 +5,7 @@ import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import { FaChevronDown, FaChevronUp, FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
 import { FaShareAlt } from "react-icons/fa";
+import toast, { Toaster } from "react-hot-toast";
 
 const HotelBookingForm = () => {
   const [formData, setFormData] = useState({
@@ -16,9 +17,17 @@ const HotelBookingForm = () => {
     coupon: "",
     noOfPersons: "",
     noOfRooms: "",
-    roomType: "Executive", 
-    totalPrice: ""
+    roomType: "Executive",
+    totalPrice: "",
   });
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [savings, setSavings] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showAll, setShowAll] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const images = [
     "/Hotels/Bedroom2.jpg",
@@ -31,13 +40,6 @@ const HotelBookingForm = () => {
     "/Hotels/gallery.jpeg",
   ];
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [appliedCoupon, setAppliedCoupon] = useState("");
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [savings, setSavings] = useState(0);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showAll, setShowAll] = useState(false);
-
   // Function to calculate total price
   const calculateTotalPrice = () => {
     const { roomType, noOfPersons, noOfRooms } = formData;
@@ -45,11 +47,11 @@ const HotelBookingForm = () => {
     let extraPersonCharge = 0;
 
     if (roomType === "Executive") {
-      basePrice = noOfPersons <= 2 ? 1200 : 1600; // ₹1200 for single/double, ₹1600 for extra persons
-      extraPersonCharge = noOfPersons > 2 ? (noOfPersons - 2) * 600 : 0; // ₹600 per extra person
+      basePrice = noOfPersons <= 2 ? 1200 : 1600;
+      extraPersonCharge = noOfPersons > 2 ? (noOfPersons - 2) * 600 : 0;
     } else if (roomType === "Deluxe") {
-      basePrice = noOfPersons <= 2 ? 1600 : 1800; // ₹1600 for single/double, ₹1800 for extra persons
-      extraPersonCharge = noOfPersons > 2 ? (noOfPersons - 2) * 600 : 0; // ₹600 per extra person
+      basePrice = noOfPersons <= 2 ? 1600 : 1800;
+      extraPersonCharge = noOfPersons > 2 ? (noOfPersons - 2) * 600 : 0;
     }
 
     const total = (basePrice + extraPersonCharge) * noOfRooms;
@@ -57,16 +59,22 @@ const HotelBookingForm = () => {
   };
 
   // Recalculate total price whenever form data changes
-useEffect(() => {
-  calculateTotalPrice();
-  setFormData((prevData) => ({
-    ...prevData,
-    totalPrice: totalPrice, // Update total price in form data
-  }));
-}, [formData.roomType, formData.noOfPersons, formData.noOfRooms, totalPrice]); 
+  useEffect(() => {
+    calculateTotalPrice();
+    setFormData((prevData) => ({
+      ...prevData,
+      totalPrice: totalPrice,
+    }));
+  }, [formData.roomType, formData.noOfPersons, formData.noOfRooms, totalPrice]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Mobile number validation (only digits and max 10 characters)
+    if (name === "mobile" && (value.length > 10 || !/^\d*$/.test(value))) {
+      return;
+    }
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -74,16 +82,25 @@ useEffect(() => {
     if (formData.coupon === "WELCOME75") {
       setAppliedCoupon("WELCOME75");
       setSavings(1708);
-      setTotalPrice(totalPrice - 1708); // Apply discount
+      setTotalPrice(totalPrice - 1708);
     } else {
       setAppliedCoupon("");
       setSavings(0);
-      calculateTotalPrice(); // Reset to original price
+      calculateTotalPrice();
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Start loading
+
+    // Validate check-in and check-out dates
+    if (new Date(formData.checkInDate) >= new Date(formData.checkOutDate)) {
+      toast.error("Check-in date must be before check-out date.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch("/api/booking", {
         method: "POST",
@@ -91,8 +108,29 @@ useEffect(() => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
+
+      if (response.ok) {
+        toast.success("Booking confirmed successfully!");
+        setIsOpen(false);
+        setFormData({
+          name: "",
+          email: "",
+          mobile: "",
+          checkInDate: "",
+          checkOutDate: "",
+          coupon: "",
+          noOfPersons: "",
+          noOfRooms: "",
+          roomType: "Executive",
+          totalPrice: "",
+        }); // Clear form
+      } else {
+        toast.error(data.message || "Booking failed. Please try again.");
+      }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false); // Stop loading
     }
   };
 
@@ -110,6 +148,7 @@ useEffect(() => {
 
   return (
     <div className="py-5 bg-gray-100 flex justify-center items-center p-4">
+      <Toaster /> {/* React Hot Toast container */}
       <div className="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-lg shadow-lg overflow-hidden">
         {/* Left Side - Image Slider and Thumbnails */}
         <div className="w-full md:w-1/2 p-6">
@@ -228,7 +267,7 @@ useEffect(() => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Enter your name"
-                  className="w-full px-4 py-3 border  border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-black"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-black"
                   required
                 />
               </div>
@@ -290,7 +329,7 @@ useEffect(() => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Mobile Number */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 ">Mobile Number</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
               <input
                 type="tel"
                 name="mobile"
@@ -298,6 +337,7 @@ useEffect(() => {
                 onChange={handleChange}
                 placeholder="Enter your mobile number"
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
+                maxLength={10}
                 required
               />
             </div>
@@ -310,6 +350,7 @@ useEffect(() => {
                 name="checkInDate"
                 value={formData.checkInDate}
                 onChange={handleChange}
+                min={new Date().toISOString().split("T")[0]} // Disable past dates
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
                 required
               />
@@ -323,6 +364,7 @@ useEffect(() => {
                 name="checkOutDate"
                 value={formData.checkOutDate}
                 onChange={handleChange}
+                min={formData.checkInDate || new Date().toISOString().split("T")[0]} // Ensure check-out is after check-in
                 className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
                 required
               />
@@ -393,16 +435,22 @@ useEffect(() => {
               Free Wi-Fi is available in all rooms.
             </p>
 
-           {/* Total Price */}
-        <p className="text-lg font-semibold text-gray-800">
-          Total Price: ₹{totalPrice}
-        </p>
+            {/* Total Price */}
+            <p className="text-lg font-semibold text-gray-800">
+              Total Price: ₹{totalPrice}
+            </p>
+
             {/* Confirm Booking Button */}
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+              disabled={isLoading}
+              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 flex items-center justify-center"
             >
-              Confirm Booking
+              {isLoading ? (
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+              ) : (
+                "Confirm Booking"
+              )}
             </button>
           </form>
 
