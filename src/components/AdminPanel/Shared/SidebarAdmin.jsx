@@ -54,7 +54,7 @@ const SidebarAdmin = () => {
           </Link>
 
           <SectionTitle title="Orders" />
-          <Link href="/admin/dashboard/orders/add" passHref>
+          <Link href="/admin/dashboard/booking/AddBooking" passHref>
             <SidebarItem
               icon={<MdAdd />}
               label="Add Booking"
