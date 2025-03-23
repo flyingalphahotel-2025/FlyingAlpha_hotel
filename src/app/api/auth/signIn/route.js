@@ -1,4 +1,4 @@
-import connectDB from '@/lib/dbConnect';
+import connectDB from '@/libsss/dbConnect';
 import userModels from '@/models/userModels';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';

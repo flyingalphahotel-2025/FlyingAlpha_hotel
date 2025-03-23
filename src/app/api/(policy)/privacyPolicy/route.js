@@ -1,4 +1,4 @@
-import connectDB from "@/lib/dbConnect";
+import connectDB from "@/libsss/dbConnect";
 import privacyPolicyModels from "@/models/(policy)/privacyPolicyModels";
 import { NextResponse } from "next/server";
 
