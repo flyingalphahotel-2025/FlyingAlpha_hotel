@@ -173,7 +173,7 @@ const HotelBookingForm = () => {
   const imagesToShow = showAll ? images : images.slice(0, 4);
 
   return (
-    <div className="py-8 bg-gradient-to-b from-blue-50 to-purple-50 flex justify-center items-center p-4 min-h-screen">
+    <div className="py-8 bg-gradient-to-b from-blue-50 to-purple-50 flex justify-center items-center p-4 min-h-[70vh]">
       <Toaster position="top-center" />
       
       <motion.div 
