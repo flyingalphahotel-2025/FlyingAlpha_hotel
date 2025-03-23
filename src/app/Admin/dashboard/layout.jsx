@@ -1,3 +1,4 @@
+"use client"
 import 'tailwindcss/tailwind.css';
 import '@/app/globals.css';
 import { Toaster } from 'react-hot-toast';
@@ -6,43 +7,47 @@ import NavbarAdmin from '@/components/AdminPanel/Shared/NavbarAdmin';
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex w-full min-h-screen overflow-hidden bg-white">
-      {/* Sidebar */}
-      <SidebarAdmin className="w-1/4 h-screen bg-white" />
+    <>
+      <div className="flex w-full min-h-screen overflow-hidden bg-white">
+        {/* Sidebar */}
+        <SidebarAdmin className="w-1/4 h-screen bg-white" />
 
-      {/* Main Content Area */}
-      <div className="flex-1 overflow-hidden">
-        {/* Navbar */}
-        <NavbarAdmin className="w-full" />
+        {/* Main Content Area */}
+        <div className="flex-1 overflow-auto flex flex-col">
+          {/* Navbar */}
+          <NavbarAdmin className="w-full" />
 
-        {/* Page Content */}
-        {children}
+          {/* Page Content */}
+          <main className="flex-1 p-4">
+            {children}
+          </main>
+        </div>
       </div>
 
-      {/* React Hot Toaster */}
+      {/* React Hot Toaster - moved outside the flex container */}
       <Toaster
-        position="top-right" // Position of the toasts
+        position="top-right" 
         toastOptions={{
-          duration: 3000, // Duration of the toast in milliseconds
+          duration: 3000,
           style: {
-            background: '#363636', // Background color
-            color: '#fff', // Text color
+            background: '#363636',
+            color: '#fff',
           },
           success: {
             iconTheme: {
-              primary: '#4CAF50', // Success icon color
-              secondary: '#fff', // Success icon background
+              primary: '#4CAF50',
+              secondary: '#fff',
             },
           },
           error: {
             iconTheme: {
-              primary: '#FF5252', // Error icon color
-              secondary: '#fff', // Error icon background
+              primary: '#FF5252',
+              secondary: '#fff',
             },
           },
         }}
       />
-    </div>
+    </>
   );
 };
 

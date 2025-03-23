@@ -5,7 +5,6 @@ import { format } from 'date-fns';
 import { Loader2, Plus } from 'lucide-react';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/toast';
 
 // Step Components
 import GuestInformationStep from '@/components/AdminPanel/Steps/GuestInformationStep';
@@ -72,7 +71,6 @@ const OfflineBookingForm = () => {
   const handleGuestAdded = (newGuest) => {
     setUsers(prev => [...prev, newGuest]);
     handleUserSelect(newGuest._id);
-    toast.success('New guest added successfully.');
   };
 
   const handleInputChange = (field, value) => {
@@ -165,11 +163,6 @@ const OfflineBookingForm = () => {
       
       const data = await response.json();
       
-      toast({
-        title: 'Booking Successful',
-        description: `Booking created with ID: ${data.bookingId}`,
-      });
-      
       // Reset form or redirect
       setCurrentStep(1);
       setFormData({
@@ -195,11 +188,6 @@ const OfflineBookingForm = () => {
       
     } catch (error) {
       console.error('Error creating booking:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to create booking. Please try again.',
-        variant: 'destructive',
-      });
     } finally {
       setIsLoading(false);
     }
