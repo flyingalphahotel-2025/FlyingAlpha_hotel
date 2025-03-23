@@ -1,4 +1,4 @@
-import connectDB from "@/libsss/dbConnect";
+import connectDB from "@/lib/dbConnect";
 import bookingModels from "@/models/bookingModels";
 import userModels from "@/models/userModels";
 import { NextResponse } from "next/server";
