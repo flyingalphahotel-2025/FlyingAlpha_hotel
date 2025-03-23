@@ -20,7 +20,7 @@ export default function ProfileSettings() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
-    <div className="max-w-full mx-auto p-4 bg-gray-50 my-10 w-full overflow-y-auto max-h-[86vh] space-y-6">
+    <div className="max-w-full mx-auto p-4 bg-gray-50  w-full overflow-y-auto max-h-[86vh] space-y-6">
       <Card>
         <CardHeader>
           <CardTitle>Profile Settings</CardTitle>
