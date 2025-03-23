@@ -43,7 +43,7 @@ const HotelBookingDashboard = () => {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
-    <div className="flex flex-col w-full p-4 space-y-6 bg-gray-50 max-h-[40vh] custom-scrollbar pb-8">
+    <div className="flex flex-col w-full p-4 space-y-6 bg-gray-50 max-h-[40vh] custom-scrollbar pb-16">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-800">Hotel Booking Dashboard</h1>
         <div className="flex items-center text-sm font-medium text-gray-500">
@@ -71,9 +71,9 @@ const HotelBookingDashboard = () => {
             <CardTitle className="text-sm font-medium text-gray-500">Total Revenue</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${totalRevenue.toLocaleString()}</div>
+            <div className="text-2xl font-bold">₹{totalRevenue.toLocaleString()}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Online: ${totalOnlineRevenue.toLocaleString()} | Offline: ${totalOfflineRevenue.toLocaleString()}
+              Online: ₹{totalOnlineRevenue.toLocaleString()} | Offline: ₹{totalOfflineRevenue.toLocaleString()}
             </p>
           </CardContent>
         </Card>
@@ -83,10 +83,10 @@ const HotelBookingDashboard = () => {
             <CardTitle className="text-sm font-medium text-gray-500">Average Revenue per Booking</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${Math.round(totalRevenue / totalBookings).toLocaleString()}</div>
+            <div className="text-2xl font-bold">₹{Math.round(totalRevenue / totalBookings).toLocaleString()}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Online: ${Math.round(totalOnlineRevenue / totalOnlineBookings).toLocaleString()} | 
-              Offline: ${Math.round(totalOfflineRevenue / totalOfflineBookings).toLocaleString()}
+              Online: ₹{Math.round(totalOnlineRevenue / totalOnlineBookings).toLocaleString()} | 
+              Offline: ₹{Math.round(totalOfflineRevenue / totalOfflineBookings).toLocaleString()}
             </p>
           </CardContent>
         </Card>
@@ -145,7 +145,7 @@ const HotelBookingDashboard = () => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
-                <Tooltip formatter={(value) => `$${value}`} />
+                <Tooltip formatter={(value) => `₹${value}`} />
                 <Legend />
                 <Line type="monotone" dataKey="onlineRevenue" name="Online Revenue" stroke="#0088FE" activeDot={{ r: 8 }} />
                 <Line type="monotone" dataKey="offlineRevenue" name="Offline Revenue" stroke="#00C49F" />
@@ -156,7 +156,7 @@ const HotelBookingDashboard = () => {
       </div>
 
       {/* Additional Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
         {/* Room Type Distribution */}
         <Card>
           <CardHeader>
@@ -240,9 +240,9 @@ const HotelBookingDashboard = () => {
                     <td className="p-2">{item.month}</td>
                     <td className="text-right p-2">{item.onlineBookings}</td>
                     <td className="text-right p-2">{item.offlineBookings}</td>
-                    <td className="text-right p-2">${item.onlineRevenue.toLocaleString()}</td>
-                    <td className="text-right p-2">${item.offlineRevenue.toLocaleString()}</td>
-                    <td className="text-right p-2 font-medium">${(item.onlineRevenue + item.offlineRevenue).toLocaleString()}</td>
+                    <td className="text-right p-2">₹{item.onlineRevenue.toLocaleString()}</td>
+                    <td className="text-right p-2">₹{item.offlineRevenue.toLocaleString()}</td>
+                    <td className="text-right p-2 font-medium">₹{(item.onlineRevenue + item.offlineRevenue).toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>
@@ -251,9 +251,9 @@ const HotelBookingDashboard = () => {
                   <td className="p-2">Total</td>
                   <td className="text-right p-2">{totalOnlineBookings}</td>
                   <td className="text-right p-2">{totalOfflineBookings}</td>
-                  <td className="text-right p-2">${totalOnlineRevenue.toLocaleString()}</td>
-                  <td className="text-right p-2">${totalOfflineRevenue.toLocaleString()}</td>
-                  <td className="text-right p-2">${totalRevenue.toLocaleString()}</td>
+                  <td className="text-right p-2">₹{totalOnlineRevenue.toLocaleString()}</td>
+                  <td className="text-right p-2">₹{totalOfflineRevenue.toLocaleString()}</td>
+                  <td className="text-right p-2">₹{totalRevenue.toLocaleString()}</td>
                 </tr>
               </tfoot>
             </table>
