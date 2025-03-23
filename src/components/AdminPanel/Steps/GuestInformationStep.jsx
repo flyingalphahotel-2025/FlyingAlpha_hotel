@@ -318,7 +318,7 @@ const GuestInformationStep = ({
                   id="fullName"
                   value={newGuest.fullName}
                   onChange={(e) => handleNewGuestChange('fullName', e.target.value)}
-                  placeholder="John Doe"
+                  placeholder="Niks Dev."
                   className="col-span-3"
                 />
               </FormControl>
@@ -337,7 +337,7 @@ const GuestInformationStep = ({
                   type="email"
                   value={newGuest.email}
                   onChange={(e) => handleNewGuestChange('email', e.target.value)}
-                  placeholder="john.doe@example.com"
+                  placeholder="niks.dev@example.com"
                   className="col-span-3"
                 />
               </FormControl>
