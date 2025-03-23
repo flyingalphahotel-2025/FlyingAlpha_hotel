@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
@@ -39,7 +40,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/toast';
 
 const OfflineBookingForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -124,6 +125,17 @@ const OfflineBookingForm = () => {
       setCurrentStep(currentStep - 1);
     }
   };
+
+  const form = useForm({
+    defaultValues: {
+      // You can set your initial form values here
+      noOfPersons: 1,
+      noOfRooms: 1,
+      roomType: 'Standard',
+      paymentMethod: 'Cash',
+      // ...other fields
+    }
+  });
 
   const handleInputChange = (field, value) => {
     setFormData(prev => {
@@ -257,9 +269,11 @@ const OfflineBookingForm = () => {
 
   // Render step content based on current step
   const renderStepContent = () => {
+    
     switch (currentStep) {
       case 1:
         return (
+          
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -874,10 +888,11 @@ const OfflineBookingForm = () => {
     </div>
   );
 }
-}; // This closes the renderStepContent function
+} // This closes the renderStepContent function
 
 return (
-  <div className="space-y-6">
+  <Form {...form}>
+  <div className="space-y-6 px-8 py-4">
     {/* Stepper */}
     <div className="mb-8">
       <div className="flex items-center justify-between space-x-2">
@@ -946,6 +961,7 @@ return (
         </div>
       </div>
     </div>
+    
 
     {/* Step Content */}
     {renderStepContent()}
@@ -966,6 +982,7 @@ return (
       </div>
     )}
   </div>
+  </Form>
 );
 };
 
