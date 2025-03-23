@@ -21,6 +21,7 @@
     "framer-motion": "^12.4.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0",
+    "nanoid": "^5.1.5",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
