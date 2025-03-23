@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { Loader2 } from 'lucide-react';
+
 import {
   Form,
   FormControl,
@@ -20,6 +21,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Card,
   CardContent,
@@ -41,11 +52,22 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { toast } from '@/components/ui/toast';
+import AddGuestModal from '@/components/AdminPanel/AddGuestModal';
 
 const OfflineBookingForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newGuestData, setNewGuestData] = useState({
+    fullName: '',
+    email: '',
+    mobileNumber: '',
+    dob: null,
+    adhaarCardNo: '',
+    voterIdNo: '',
+    drivingLicence: '',
+  });
   const [formData, setFormData] = useState({
     users: [],
     checkInDate: new Date(),
@@ -78,41 +100,54 @@ const OfflineBookingForm = () => {
   const paymentMethods = ['Cash', 'Card', 'UPI', 'Bank Transfer', 'Other'];
   const paymentStatuses = ['Pending', 'Paid', 'Partial', 'Refunded'];
 
-  // Mock fetch users - replace with actual API call
-  useEffect(() => {
-    const fetchUsers = async () => {
-      setIsLoading(true);
-      try {
-        // Replace with your actual API call
-        const response = await new Promise(resolve => 
-          setTimeout(() => {
-            resolve({
-              ok: true,
-              json: () => Promise.resolve([
-                { _id: '1', fullName: 'John Doe', email: 'john@example.com', mobileNumber: '9876543210' },
-                { _id: '2', fullName: 'Jane Smith', email: 'jane@example.com', mobileNumber: '8765432109' },
-                { _id: '3', fullName: 'Alex Johnson', email: 'alex@example.com', mobileNumber: '7654321098' },
-              ])
-            });
-          }, 1000)
-        );
-        
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-        toast({
-          title: 'Error',
-          description: 'Failed to fetch users. Please try again.',
-          variant: 'destructive',
-        });
-      } finally {
-        setIsLoading(false);
-      }
+  const handleAddNewGuest = () => {
+    // Validate the form
+    if (!newGuestData.fullName || !newGuestData.mobileNumber) {
+      toast({
+        title: "Error",
+        description: "Full name and mobile number are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+  
+    // Generate a temporary ID for the new user
+    const tempId = `temp_${Date.now()}`;
+    
+    // Create new user object
+    const newUser = {
+      _id: tempId,
+      fullName: newGuestData.fullName,
+      email: newGuestData.email,
+      mobileNumber: newGuestData.mobileNumber,
+      // Store other fields as needed
     };
-
-    fetchUsers();
-  }, []);
+    
+    // Add to users list
+    setUsers(prev => [...prev, newUser]);
+    
+    // Auto-select the new user
+    handleUserSelect(tempId);
+    
+    // Reset form
+    setNewGuestData({
+      fullName: '',
+      email: '',
+      mobileNumber: '',
+      dob: null,
+      adhaarCardNo: '',
+      voterIdNo: '',
+      drivingLicence: '',
+    });
+    
+    // Close dialog
+    // You'll need to implement dialog state if your Dialog component requires it
+    
+    toast({
+      title: "Success",
+      description: "New guest added successfully.",
+    });
+  };
 
   const handleNext = () => {
     if (currentStep < steps.length) {
@@ -136,6 +171,14 @@ const OfflineBookingForm = () => {
       // ...other fields
     }
   });
+
+  // Update the handleAddNewGuest logic in OfflineBookingForm
+  const handleGuestAdded = (newGuest) => {
+    setUsers(prev => [...prev, newGuest]);
+    handleUserSelect(newGuest._id);
+    toast.success('New guest added successfully.');
+  };
+
 
   const handleInputChange = (field, value) => {
     setFormData(prev => {
@@ -275,102 +318,113 @@ const OfflineBookingForm = () => {
         return (
           
           <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Select Guests</CardTitle>
-                <CardDescription>
-                  Choose existing users or add new users for this booking.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {isLoading ? (
-                    <div className="col-span-full flex justify-center items-center h-40">
-                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                    </div>
-                  ) : (
-                    users.map(user => (
-                      <Card 
-                        key={user._id} 
-                        className={`cursor-pointer transition-all hover:border-primary ${
-                          formData.selectedUsers.some(u => u._id === user._id) 
-                            ? 'border-2 border-primary' 
-                            : ''
-                        }`}
-                        onClick={() => handleUserSelect(user._id)}
-                      >
-                        <CardHeader className="pb-2">
-                          <div className="flex justify-between items-start">
-                            <CardTitle className="text-lg">{user.fullName}</CardTitle>
-                            {formData.selectedUsers.some(u => u._id === user._id) && (
-                              <Badge variant="default">Selected</Badge>
-                            )}
-                          </div>
-                          <CardDescription>{user.email}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-sm">Phone: {user.mobileNumber}</p>
-                        </CardContent>
-                      </Card>
-                    ))
+  <Card>
+    <CardHeader className="flex flex-row items-center justify-between">
+      <div>
+        <CardTitle>Select Guests</CardTitle>
+        <CardDescription>
+          Choose existing users or add new users for this booking.
+        </CardDescription>
+      </div>
+      <Button variant="default" onClick={() => setIsDialogOpen(true)}>
+      <Plus className="h-4 w-4 mr-2" />
+      Add Guest
+    </Button>
+    <AddGuestModal
+  open={isDialogOpen}
+  onOpenChange={setIsDialogOpen}
+  onGuestAdded={handleGuestAdded}
+/>
+    </CardHeader>
+    <CardContent>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {isLoading ? (
+          <div className="col-span-full flex justify-center items-center h-40">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          users.map(user => (
+            <Card 
+              key={user._id} 
+              className={`cursor-pointer transition-all hover:border-primary ${
+                formData.selectedUsers.some(u => u._id === user._id) 
+                  ? 'border-2 border-primary' 
+                  : ''
+              }`}
+              onClick={() => handleUserSelect(user._id)}
+            >
+              <CardHeader className="pb-2">
+                <div className="flex justify-between items-start">
+                  <CardTitle className="text-lg">{user.fullName}</CardTitle>
+                  {formData.selectedUsers.some(u => u._id === user._id) && (
+                    <Badge variant="default">Selected</Badge>
                   )}
                 </div>
+                <CardDescription>{user.email}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm">Phone: {user.mobileNumber}</p>
               </CardContent>
             </Card>
+          ))
+        )}
+      </div>
+    </CardContent>
+  </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FormField
-                name="noOfPersons"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Number of Persons</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        min="1"
-                        value={formData.noOfPersons}
-                        onChange={(e) => handleInputChange('noOfPersons', parseInt(e.target.value) || 1)}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="purpose"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Purpose of Stay (Optional)</FormLabel>
-                    <FormControl>
-                      <Input
-                        value={formData.purpose}
-                        onChange={(e) => handleInputChange('purpose', e.target.value)}
-                        placeholder="Business, Leisure, etc."
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="specialRequests"
-                render={({ field }) => (
-                  <FormItem className="col-span-1 md:col-span-2">
-                    <FormLabel>Special Requests (Optional)</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        value={formData.specialRequests}
-                        onChange={(e) => handleInputChange('specialRequests', e.target.value)}
-                        placeholder="Any special requirements or requests"
-                        rows={3}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <FormField
+      name="noOfPersons"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Number of Persons</FormLabel>
+          <FormControl>
+            <Input
+              type="number"
+              min="1"
+              value={formData.noOfPersons}
+              onChange={(e) => handleInputChange('noOfPersons', parseInt(e.target.value) || 1)}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+    <FormField
+      name="purpose"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Purpose of Stay (Optional)</FormLabel>
+          <FormControl>
+            <Input
+              value={formData.purpose}
+              onChange={(e) => handleInputChange('purpose', e.target.value)}
+              placeholder="Business, Leisure, etc."
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+    <FormField
+      name="specialRequests"
+      render={({ field }) => (
+        <FormItem className="col-span-1 md:col-span-2">
+          <FormLabel>Special Requests (Optional)</FormLabel>
+          <FormControl>
+            <Textarea
+              value={formData.specialRequests}
+              onChange={(e) => handleInputChange('specialRequests', e.target.value)}
+              placeholder="Any special requirements or requests"
+              rows={3}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  </div>
+</div>
         );
       
       case 2:
