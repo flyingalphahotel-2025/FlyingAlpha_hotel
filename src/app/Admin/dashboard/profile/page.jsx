@@ -1,11 +1,15 @@
 'use client';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaUserCircle } from 'react-icons/fa';
-import { Switch } from '@headlessui/react';
+import { UserCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 
 export default function ProfileSettings() {
-  const [enabled, setEnabled] = useState(true);
+  const [emailNotifications, setEmailNotifications] = useState(true);
   const [twoFactor, setTwoFactor] = useState(false);
   const [fullName, setFullName] = useState('Amit Kumar');
   const [email, setEmail] = useState('amit@cleanveda.com');
@@ -16,116 +20,126 @@ export default function ProfileSettings() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
-    <div className="max-w-full mx-auto p-4 bg-gray-50 my-10 w-full  overflow-y-auto max-h-[86vh] custom-scrollbar flex flex-col">
-      <div className="bg-white p-6 rounded-lg shadow-md">
-      <h1 className="text-2xl font-semibold mb-4 text-black">Profile Settings</h1>
-        {/* Profile Picture and Info */}
-        <div className="flex items-center space-x-6 border-b pb-4">
-          <FaUserCircle className="text-gray-500 w-20 h-20" />
-          <div>
-            <h2 className="text-lg font-semibold text-black">{fullName}</h2>
-            <p className="text-black">Administrator</p>
-            <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg">Change Photo</button>
+    <div className="max-w-full mx-auto p-4 bg-gray-50 my-10 w-full overflow-y-auto max-h-[86vh] space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Profile Settings</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/* Profile Picture and Info */}
+          <div className="flex items-center space-x-6 pb-4">
+            <UserCircle className="text-gray-500 w-20 h-20" />
+            <div>
+              <h2 className="text-lg font-semibold">{fullName}</h2>
+              <p className="text-muted-foreground">Administrator</p>
+              <Button className="mt-2">Change Photo</Button>
+            </div>
           </div>
-        </div>
-        
-        {/* Account Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-          <div>
-            <label className="block text-black">Full Name</label>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="w-full p-2 border rounded-lg text-black"
-            />
+          
+          <Separator className="my-4" />
+          
+          {/* Account Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+            <div className="space-y-2">
+              <Label htmlFor="fullName">Full Name</Label>
+              <Input
+                id="fullName"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email Address</Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phoneNumber">Phone Number</Label>
+              <Input
+                id="phoneNumber"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="location">Location</Label>
+              <Input
+                id="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </div>
           </div>
-          <div>
-            <label className="block text-black">Email Address</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border rounded-lg text-black"
-            />
-          </div>
-          <div>
-            <label className="block text-black">Phone Number</label>
-            <input
-              type="text"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full p-2 border rounded-lg text-black"
-            />
-          </div>
-          <div>
-            <label className="block text-black">Location</label>
-            <input
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="w-full p-2 border rounded-lg text-black"
-            />
-          </div>
-        </div>
-        <motion.button whileHover={{ scale: 1.05 }} className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg">Save Changes</motion.button>
-      </div>
+          <Button className="mt-6">Save Changes</Button>
+        </CardContent>
+      </Card>
       
       {/* Change Password Section */}
-      <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-        <h2 className="text-lg font-semibold mb-4 text-black">Change Password</h2>
-        <div className="grid grid-cols-1 gap-4">
-          <input
-            type="password"
-            placeholder="Current Password"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            className="w-full p-2 border rounded-lg text-black"
-          />
-          <input
-            type="password"
-            placeholder="New Password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            className="w-full p-2 border rounded-lg text-black"
-          />
-          <input
-            type="password"
-            placeholder="Confirm New Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full p-2 border rounded-lg text-black"
-          />
-        </div>
-        <motion.button whileHover={{ scale: 1.05 }} className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg">Update Password</motion.button>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Change Password</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="currentPassword">Current Password</Label>
+            <Input
+              id="currentPassword"
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="newPassword">New Password</Label>
+            <Input
+              id="newPassword"
+              type="password" 
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">Confirm New Password</Label>
+            <Input
+              id="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          <Button className="mt-2">Update Password</Button>
+        </CardContent>
+      </Card>
       
       {/* Account Preferences */}
-      <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-        <h2 className="text-lg font-semibold mb-4 text-black">Account Preferences</h2>
-        <div className="flex justify-between items-center border-b pb-4">
-          <span className="text-black">Email Notifications</span>
-          <Switch
-            checked={enabled}
-            onChange={setEnabled}
-            className={`${enabled ? 'bg-blue-600' : 'bg-gray-300'} relative inline-flex h-6 w-11 items-center rounded-full`}
-          >
-            <span className="sr-only">Enable notifications</span>
-            <span className={`transform transition ease-in-out duration-200 inline-block w-4 h-4 bg-white rounded-full ${enabled ? 'translate-x-6' : 'translate-x-1'}`} />
-          </Switch>
-        </div>
-        <div className="flex justify-between items-center mt-4">
-          <span className="text-black">Two-Factor Authentication</span>
-          <Switch
-            checked={twoFactor}
-            onChange={setTwoFactor}
-            className={`${twoFactor ? 'bg-blue-600' : 'bg-gray-300'} relative inline-flex h-6 w-11 items-center rounded-full`}
-          >
-            <span className="sr-only">Enable 2FA</span>
-            <span className={`transform transition ease-in-out duration-200 inline-block w-4 h-4 bg-white rounded-full ${twoFactor ? 'translate-x-6' : 'translate-x-1'}`} />
-          </Switch>
-        </div>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Account Preferences</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex justify-between items-center py-2">
+            <Label htmlFor="emailNotifications" className="cursor-pointer">Email Notifications</Label>
+            <Switch
+              id="emailNotifications"
+              checked={emailNotifications}
+              onCheckedChange={setEmailNotifications}
+            />
+          </div>
+          <Separator className="my-4" />
+          <div className="flex justify-between items-center py-2">
+            <Label htmlFor="twoFactor" className="cursor-pointer">Two-Factor Authentication</Label>
+            <Switch
+              id="twoFactor"
+              checked={twoFactor}
+              onCheckedChange={setTwoFactor}
+            />
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
