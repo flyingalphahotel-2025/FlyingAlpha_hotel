@@ -34,3 +34,23 @@ body {
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Adamiya";
+  src: url("/fonts/Adamiya.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+.custom-font {
+  font-family: "Adamiya", sans-serif;
+}
+@font-face {
+  font-family: "Hemgjord";
+  src: url("/fonts/HemgjordLettering_PERSONAL_USE_ONLY.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+.custom-fontHemgjord {
+  font-family: "Hemgjord", sans-serif;
+}
+
+
