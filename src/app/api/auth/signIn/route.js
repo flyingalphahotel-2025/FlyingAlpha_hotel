@@ -1,4 +1,4 @@
-import connectDB from '@/Lib/dbConnect';
+import connectDB from '@/lib/dbConnect';
 import userModels from '@/models/userModels';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
