@@ -1,11 +1,37 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Dialog } from "@headlessui/react";
 import Image from "next/image";
-import { FaChevronDown, FaChevronUp, FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
-import { FaShareAlt } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight, FaShareAlt } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
+
+// Import ShadCn components
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1
+  }
+};
 
 const HotelBookingForm = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +53,7 @@ const HotelBookingForm = () => {
   const [savings, setSavings] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showAll, setShowAll] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const images = [
     "/Hotels/Bedroom2.jpg",
@@ -92,7 +118,7 @@ const HotelBookingForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
 
     // Validate check-in and check-out dates
     if (new Date(formData.checkInDate) >= new Date(formData.checkOutDate)) {
@@ -123,14 +149,14 @@ const HotelBookingForm = () => {
           noOfRooms: "",
           roomType: "Executive",
           totalPrice: "",
-        }); // Clear form
+        });
       } else {
         toast.error(data.message || "Booking failed. Please try again.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
@@ -147,321 +173,385 @@ const HotelBookingForm = () => {
   const imagesToShow = showAll ? images : images.slice(0, 4);
 
   return (
-    <div className="py-5 bg-gray-100 flex justify-center items-center p-4">
-      <Toaster /> {/* React Hot Toast container */}
-      <div className="flex flex-col md:flex-row w-full max-w-6xl bg-white rounded-lg shadow-lg overflow-hidden">
-        {/* Left Side - Image Slider and Thumbnails */}
-        <div className="w-full md:w-1/2 p-6">
-          <div className="flex flex-col md:flex-row gap-4">
-            {/* Thumbnail Column (Desktop) */}
-            <motion.div
-              className="hidden md:flex flex-col gap-4"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              {imagesToShow.map((image, index) => (
+    <div className="py-8 bg-gradient-to-b from-blue-50 to-purple-50 flex justify-center items-center p-4 min-h-screen">
+      <Toaster position="top-center" />
+      
+      <motion.div 
+        className="w-full max-w-6xl"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
+        <Card className="overflow-hidden border-none shadow-xl bg-white rounded-xl">
+          <div className="flex flex-col md:flex-row">
+            {/* Left Side - Image Slider and Thumbnails */}
+            <motion.div className="w-full md:w-1/2 p-6" variants={itemVariants}>
+              <div className="flex flex-col md:flex-row gap-4">
+                {/* Thumbnail Column (Desktop) */}
                 <motion.div
-                  key={index}
-                  className="w-20 h-20 overflow-hidden rounded-lg shadow-lg cursor-pointer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setCurrentImageIndex(index)}
+                  className="hidden md:flex flex-col gap-4"
+                  variants={itemVariants}
+                >
+                  {imagesToShow.map((image, index) => (
+                    <motion.div
+                      key={index}
+                      className={`w-20 h-20 overflow-hidden rounded-lg shadow-md cursor-pointer ${
+                        currentImageIndex === index ? "ring-2 ring-blue-500" : ""
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setCurrentImageIndex(index)}
+                    >
+                      <Image
+                        src={image}
+                        alt={`Thumbnail ${index + 1}`}
+                        width={80}
+                        height={80}
+                        className="object-cover w-full h-full"
+                      />
+                    </motion.div>
+                  ))}
+
+                  {/* Show More / Show Less Button */}
+                  {images.length > 4 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowAll(!showAll)}
+                      className="flex items-center justify-center mt-2 text-blue-600 hover:text-blue-800"
+                    >
+                      {showAll ? (
+                        <>
+                          <FaChevronUp className="mr-2" />
+                          Show Less
+                        </>
+                      ) : (
+                        <>
+                          <FaChevronDown className="mr-2" />
+                          Show More
+                        </>
+                      )}
+                    </Button>
+                  )}
+                </motion.div>
+
+                {/* Preview Image Container */}
+                <motion.div
+                  className="w-full h-64 md:h-96 relative rounded-xl overflow-hidden shadow-lg"
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.01 }}
                 >
                   <Image
-                    src={image}
-                    alt={`Thumbnail ${index + 1}`}
-                    width={80}
-                    height={80}
-                    className="object-cover w-full h-full"
+                    src={images[currentImageIndex]}
+                    alt={`Preview Image ${currentImageIndex + 1}`}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+
+                  {/* Image Navigation Controls */}
+                  <motion.div
+                    className="flex justify-between w-full absolute top-1/2 transform -translate-y-1/2 px-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <motion.button
+                      onClick={prevImage}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="p-2 bg-white/80 rounded-full shadow-lg text-blue-600 hover:bg-white"
+                    >
+                      <FaRegArrowAltCircleLeft className="text-2xl" />
+                    </motion.button>
+                    <motion.button
+                      onClick={nextImage}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="p-2 bg-white/80 rounded-full shadow-lg text-blue-600 hover:bg-white"
+                    >
+                      <FaRegArrowAltCircleRight className="text-2xl" />
+                    </motion.button>
+                  </motion.div>
+
+                  {/* Image pagination indicator */}
+                  <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                    {images.map((_, index) => (
+                      <motion.div 
+                        key={index}
+                        className={`h-2 w-2 rounded-full ${
+                          currentImageIndex === index ? "bg-white" : "bg-white/50"
+                        }`}
+                        whileHover={{ scale: 1.5 }}
+                        onClick={() => setCurrentImageIndex(index)}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Right Side - Booking Form */}
+            <div className="w-full md:w-1/2 p-6 bg-gradient-to-br from-white to-blue-50">
+              <CardHeader className="p-0 mb-6">
+                <motion.div variants={itemVariants}>
+                  <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent">Book Your Stay</CardTitle>
+                  <CardDescription className="text-gray-600 mt-2">
+                    Experience luxury and comfort like never before. Fill out the form below to reserve your stay with us.
+                  </CardDescription>
+                </motion.div>
+              </CardHeader>
+
+              <CardContent className="p-0 space-y-6">
+                {/* Name Field */}
+                <motion.div variants={itemVariants}>
+                  <Label htmlFor="name" className="text-sm font-medium text-gray-700 mb-1">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Enter your name"
+                    className="w-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
                   />
                 </motion.div>
-              ))}
 
-              {/* Show More / Show Less Button */}
-              {images.length > 4 && (
-                <button
-                  onClick={() => setShowAll(!showAll)}
-                  className="flex items-center justify-center mt-2 text-blue-500 hover:text-blue-700"
+                {/* Email Field */}
+                <motion.div variants={itemVariants}>
+                  <Label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Enter your email"
+                    className="w-full border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </motion.div>
+
+                {/* Special Offers */}
+                <motion.div 
+                  variants={itemVariants}
+                  className="bg-gradient-to-r from-indigo-100 to-purple-100 p-4 rounded-lg shadow-sm"
                 >
-                  {showAll ? (
-                    <>
-                      <FaChevronUp className="mr-2" />
-                      Show Less
-                    </>
-                  ) : (
-                    <>
-                      <FaChevronDown className="mr-2" />
-                      Show More
-                    </>
-                  )}
-                </button>
-              )}
-            </motion.div>
+                  <Badge className="bg-gradient-to-r from-pink-500 to-orange-500 mb-2">Special Offer</Badge>
+                  <p className="text-sm text-gray-800">Book now and get 10% off on dining during your stay!</p>
+                </motion.div>
 
-            {/* Preview Image Container */}
-            <motion.div
-              className="w-full h-64 md:h-96 relative rounded-lg overflow-hidden"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Image
-                src={images[currentImageIndex]}
-                alt={`Preview Image ${currentImageIndex + 1}`}
-                fill
-                className="object-cover"
-              />
-
-              {/* Mobile Slider Controls */}
-              <motion.div
-                className="flex justify-between w-full absolute top-1/2 transform -translate-y-1/2 px-4 md:hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                <motion.button
-                  onClick={prevImage}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="p-2 bg-white/80 rounded-full shadow-lg"
+                {/* Book Now Button */}
+                <motion.div 
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <FaRegArrowAltCircleLeft className="text-2xl text-gray-800" />
-                </motion.button>
-                <motion.button
-                  onClick={nextImage}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="p-2 bg-white/80 rounded-full shadow-lg"
+                  <Button
+                    onClick={() => setIsOpen(true)}
+                    disabled={!formData.name || !formData.email}
+                    className="w-full py-6 rounded-lg text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg"
+                  >
+                    Book Now
+                  </Button>
+                </motion.div>
+
+                {/* Share Button */}
+                <motion.div 
+                  className="flex justify-center items-center mt-4"
+                  variants={itemVariants}
                 >
-                  <FaRegArrowAltCircleRight className="text-2xl text-gray-800" />
-                </motion.button>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Right Side - Booking Form */}
-        <div className="w-full md:w-1/2 p-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Heading and Description */}
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Book Your Stay</h1>
-            <p className="text-gray-600 mb-6">
-              Experience luxury and comfort like never before. Fill out the form below to reserve your stay with us.
-            </p>
-
-            {/* Form Fields */}
-            <div className="space-y-6">
-              {/* Name Field */}
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Enter your name"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-black"
-                  required
-                />
-              </div>
-
-              {/* Email Field */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter your email"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-black"
-                  required
-                />
-              </div>
-
-              {/* Book Now Button */}
-              <button
-                onClick={() => setIsOpen(true)}
-                disabled={!formData.name || !formData.email}
-                className={`w-full py-3 rounded-lg transition-all shadow-lg ${
-                  formData.name && formData.email
-                    ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
-              >
-                Book Now
-              </button>
-
-              {/* Share Icon */}
-              <div className="flex justify-center items-center mt-4">
-                <button
-                  onClick={() => alert("Share this page!")}
-                  className="flex items-center text-gray-600 hover:text-blue-600 transition-all"
-                >
-                  <FaShareAlt className="mr-2" />
-                  <span className="text-sm font-medium">Share this offer</span>
-                </button>
-              </div>
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.href);
+                      toast.success("Link copied to clipboard!");
+                    }}
+                    className="flex items-center text-gray-600 hover:text-blue-600 transition-all"
+                  >
+                    <FaShareAlt className="mr-2" />
+                    <span className="text-sm font-medium">Share this offer</span>
+                  </Button>
+                </motion.div>
+              </CardContent>
             </div>
-          </motion.div>
-        </div>
-      </div>
+          </div>
+        </Card>
+      </motion.div>
 
-      {/* Modal */}
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-black bg-opacity-50 fixed inset-0"></div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
-          className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md z-50"
-        >
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Complete Your Booking</h2>
+      {/* Booking Dialog - Using ShadCn Dialog */}
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-gray-800">Complete Your Booking</DialogTitle>
+            <DialogDescription>
+              Fill in the details below to confirm your reservation.
+            </DialogDescription>
+          </DialogHeader>
+          
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Mobile Number */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="mobile">Mobile Number</Label>
+              <Input
+                id="mobile"
                 type="tel"
                 name="mobile"
                 value={formData.mobile}
                 onChange={handleChange}
                 placeholder="Enter your mobile number"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
                 maxLength={10}
                 required
               />
             </div>
 
             {/* Check-In Date */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Check-In Date</label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="checkInDate">Check-In Date</Label>
+              <Input
+                id="checkInDate"
                 type="date"
                 name="checkInDate"
                 value={formData.checkInDate}
                 onChange={handleChange}
-                min={new Date().toISOString().split("T")[0]} // Disable past dates
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
+                min={new Date().toISOString().split("T")[0]}
                 required
               />
             </div>
 
             {/* Check-Out Date */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Check-Out Date</label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="checkOutDate">Check-Out Date</Label>
+              <Input
+                id="checkOutDate"
                 type="date"
                 name="checkOutDate"
                 value={formData.checkOutDate}
                 onChange={handleChange}
-                min={formData.checkInDate || new Date().toISOString().split("T")[0]} // Ensure check-out is after check-in
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
+                min={formData.checkInDate || new Date().toISOString().split("T")[0]}
                 required
               />
             </div>
 
             {/* No. of Persons */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">No. of Persons</label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="noOfPersons">No. of Persons</Label>
+              <Input
+                id="noOfPersons"
                 type="number"
                 name="noOfPersons"
                 value={formData.noOfPersons}
                 onChange={handleChange}
                 placeholder="Enter number of persons"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
+                min="1"
                 required
               />
             </div>
 
             {/* No. of Rooms */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">No. of Rooms</label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="noOfRooms">No. of Rooms</Label>
+              <Input
+                id="noOfRooms"
                 type="number"
                 name="noOfRooms"
                 value={formData.noOfRooms}
                 onChange={handleChange}
                 placeholder="Enter number of rooms"
-                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 text-black"
+                min="1"
                 required
               />
             </div>
 
-            {/* Room Type Radio Buttons */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Room Type</label>
-              <div className="flex gap-4">
-                <label className="flex items-center">
+            {/* Room Type - Using standard HTML radio buttons instead of RadioGroup */}
+            <div className="space-y-2">
+              <Label>Room Type</Label>
+              <div className="flex flex-col space-y-2">
+                <div className="flex items-center space-x-2">
                   <input
                     type="radio"
+                    id="executive"
                     name="roomType"
                     value="Executive"
                     checked={formData.roomType === "Executive"}
                     onChange={handleChange}
-                    className="focus:ring-blue-500"
+                    className="h-4 w-4 text-blue-600"
                   />
-                  <span className="ml-2 text-black">Executive Room</span>
-                </label>
-                <label className="flex items-center">
+                  <Label htmlFor="executive">Executive Room</Label>
+                </div>
+                <div className="flex items-center space-x-2">
                   <input
                     type="radio"
+                    id="deluxe"
                     name="roomType"
                     value="Deluxe"
                     checked={formData.roomType === "Deluxe"}
                     onChange={handleChange}
-                    className="focus:ring-blue-500"
+                    className="h-4 w-4 text-blue-600"
                   />
-                  <span className="ml-2 text-black">Deluxe Room</span>
-                </label>
+                  <Label htmlFor="deluxe">Deluxe Room</Label>
+                </div>
               </div>
             </div>
 
-            {/* Complimentary Breakfast and Free Wi-Fi */}
-            <p className="text-sm text-gray-600">
-              Complimentary breakfast will be provided.
-            </p>
-            <p className="text-sm text-gray-600">
-              Free Wi-Fi is available in all rooms.
-            </p>
+            <Separator />
+
+            {/* Amenities */}
+            <div className="bg-blue-50 p-3 rounded-lg">
+              <p className="text-sm font-medium text-blue-800 mb-2">Included with your stay:</p>
+              <div className="flex gap-2 flex-wrap">
+                <Badge variant="outline" className="bg-white text-blue-600">Complimentary Breakfast</Badge>
+                <Badge variant="outline" className="bg-white text-green-600">Free Wi-Fi</Badge>
+                <Badge variant="outline" className="bg-white text-purple-600">Pool Access</Badge>
+              </div>
+            </div>
 
             {/* Total Price */}
-            <p className="text-lg font-semibold text-gray-800">
-              Total Price: ₹{totalPrice}
-            </p>
-
-            {/* Confirm Booking Button */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 flex items-center justify-center"
-            >
-              {isLoading ? (
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-              ) : (
-                "Confirm Booking"
+            <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600">Base Price:</span>
+                <span>₹{totalPrice}</span>
+              </div>
+              {appliedCoupon && (
+                <div className="flex justify-between items-center text-green-600">
+                  <span>Discount:</span>
+                  <span>-₹{savings}</span>
+                </div>
               )}
-            </button>
-          </form>
+              <Separator className="my-2" />
+              <div className="flex justify-between items-center font-bold">
+                <span>Total:</span>
+                <span className="text-lg">₹{totalPrice - savings}</span>
+              </div>
+            </div>
 
-          {/* Close Button */}
-          <button
-            onClick={() => setIsOpen(false)}
-            className="mt-4 w-full bg-gray-500 text-white py-2 rounded-md hover:bg-gray-600"
-          >
-            Close
-          </button>
-        </motion.div>
+            <DialogFooter className="flex flex-col sm:flex-row gap-2">
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              >
+                {isLoading ? (
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                ) : (
+                  "Confirm Booking"
+                )}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+                className="w-full sm:w-auto"
+              >
+                Cancel
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
       </Dialog>
     </div>
   );
