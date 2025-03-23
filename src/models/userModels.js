@@ -38,6 +38,16 @@ const userSchema = new mongoose.Schema({
         enum: ['Blocked', 'Active'],
         default: 'Active'
     },
+    adhaarCard: {
+        type: String,
+    },
+    VoterIdCard: {
+        type: String,
+    },
+    DrivingLicence: {
+        type: String,
+    },
+
 }, {
     timestamps: true
 });
