@@ -29,11 +29,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white text-black transition-colors duration-300 shadow-lg">
-      <div className="flex justify-between items-center px-4 ">
+    <nav className="bg-gray-200 text-black transition-colors duration-300 shadow-lg">
+      <div className="flex justify-between items-center px-4 py-4">
         {/* Logo Section */}
         <div className="flex items-center">
-          <Image src={logo} alt="Logo" className="w-[80px] h-auto mr-4" />
+          {/* <Image src={logo} alt="Logo" className="w-[80px] h-auto mr-4" /> */}
           <span className="text-3xl font-bold text-black custom-fontHemgjord">
             Flying Alpha Super Admin Panel
           </span>
