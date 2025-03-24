@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="shrink-0">
-            <Link href="#" className="flex">
+            <Link href="/" className="flex">
               <span className="text-3xl pinyon-script-regular text-white font-bold">Flying Alpha Hotel</span>
             </Link>
           </div>
@@ -92,7 +92,7 @@ const Navbar = () => {
       {/* Button */}
       <Link
         href="/booking"
-        
+
         className="relative inline-flex items-center justify-center px-6 py-2 text-base font-normal text-gray-700 bg-white border border-transparent rounded-full hover:underline"
         role="button"
       >
