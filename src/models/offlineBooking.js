@@ -9,8 +9,7 @@ const offlineBookingSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true,
-        validate: [(val) => val.length > 0, "At least One User is Required"],
+        required:[ true, "User is required"],
       },
     ],
     checkInDate: {

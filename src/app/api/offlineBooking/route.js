@@ -3,7 +3,6 @@ import offlineBooking from "@/models/offlineBooking";
 import userModels from "@/models/userModels";
 import { NextResponse } from "next/server";
 
-
 export const POST = async (req) => {
     try {
         await connectDB();
@@ -40,50 +39,87 @@ export const POST = async (req) => {
             );
         }
 
-        // Process each selected user
-        const userBookings = await Promise.all(selectedUsers.map(async (user) => {
-            // Find or create user
-            let existingUser = await userModels.findOne({ 
+        // Process each selected user and collect their IDs
+        const userIds = await Promise.all(selectedUsers.map(async (user) => {
+            // Validate user data
+            if (!user.fullName || !user.email || !user.mobileNumber) {
+                throw new Error(`Invalid user data: Missing required fields for ${JSON.stringify(user)}`);
+            }
+
+            // Find existing user with matching criteria
+            let existingUser = await userModels.findOne({
                 $or: [
-                    { email: user.email }, 
+                    { 
+                        $and: [
+                            { fullName: user.fullName },
+                            { email: user.email },
+                            { mobileNumber: user.mobileNumber }
+                        ]
+                    },
+                    { email: user.email },
                     { mobileNumber: user.mobileNumber }
-                ] 
+                ]
             });
 
+            // If no existing user, create a new one
             if (!existingUser) {
                 existingUser = new userModels({
                     fullName: user.fullName,
                     email: user.email,
                     mobileNumber: user.mobileNumber,
-                    // Add any other user fields from the form
                 });
                 await existingUser.save();
+            } else {
+                // If user exists, update any missing or outdated information
+                let needsUpdate = false;
+                
+                if (!existingUser.fullName && user.fullName) {
+                    existingUser.fullName = user.fullName;
+                    needsUpdate = true;
+                }
+                
+                if (!existingUser.email && user.email) {
+                    existingUser.email = user.email;
+                    needsUpdate = true;
+                }
+                
+                if (!existingUser.mobileNumber && user.mobileNumber) {
+                    existingUser.mobileNumber = user.mobileNumber;
+                    needsUpdate = true;
+                }
+                
+                if (needsUpdate) {
+                    await existingUser.save();
+                }
             }
 
-            // Create booking
-            const newBooking = new offlineBooking({
-                user: existingUser._id,
-                checkInDate: new Date(checkInDate),
-                checkInTime: checkInTime,
-                checkOutDate: new Date(checkOutDate),
-                checkOutTime: checkOutTime,
-                noOfPersons: parseInt(noOfPersons),
-                noOfRooms: parseInt(noOfRooms),
-                roomNumbers: roomNumbers,
-                roomType: roomType,
-                totalPrice: parseFloat(totalPrice),
-                paidAmount: parseFloat(paidAmount),
-                leftAmount: parseFloat(leftAmount),
-                paymentStatus: paymentStatus,
-                paymentMethod: paymentMethod,
-                specialRequests: specialRequests,
-                purpose: purpose,
-                bookingStatus: bookingStatus
-            });
-
-            await newBooking.save();
-            return newBooking;
+            return existingUser._id;
         }));
+
+        console.log("User IDs:", userIds);
+
+        // Create booking with array of user IDs
+        const newBooking = new offlineBooking({
+            users: userIds, // Save array of user IDs
+            checkInDate: new Date(checkInDate),
+            checkInTime: checkInTime,
+            checkOutDate: new Date(checkOutDate),
+            checkOutTime: checkOutTime,
+            noOfPersons: parseInt(noOfPersons),
+            noOfRooms: parseInt(noOfRooms),
+            roomNumbers: roomNumbers,
+            roomType: roomType,
+            totalPrice: parseFloat(totalPrice),
+            paidAmount: parseFloat(paidAmount),
+            leftAmount: parseFloat(leftAmount),
+            paymentStatus: paymentStatus,
+            paymentMethod: paymentMethod,
+            specialRequests: specialRequests,
+            purpose: purpose,
+            bookingStatus: bookingStatus
+        });
+
+        await newBooking.save();
 
         // Generate a booking reference number
         const bookingReference = `#Alpha${Math.random().toString(36).substring(2, 12).toUpperCase()}`;
@@ -91,7 +127,7 @@ export const POST = async (req) => {
         return NextResponse.json(
             { 
                 message: "Booking created successfully", 
-                bookings: userBookings,
+                booking: newBooking,
                 bookingReference: bookingReference
             },
             { status: 201 }
@@ -108,14 +144,14 @@ export const POST = async (req) => {
     }
 };
 
-// GET API to fetch all bookings with detailed user information
+// GET API to fetch bookings with populated user information
 export const GET = async () => {
     try {
         await connectDB();
 
         const bookings = await offlineBooking.find()
             .populate({
-                path: 'user',
+                path: 'users', // Update to use 'users' instead of 'user'
                 select: 'fullName email mobileNumber'
             })
             .sort({ createdAt: -1 }); // Sort by most recent bookings first
