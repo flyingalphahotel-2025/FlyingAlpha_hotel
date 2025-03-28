@@ -1,5 +1,5 @@
 import connectDB from "@/lib/dbConnect";
-import bookingModels from "@/models/bookingModels";
+import offlineBooking from "@/models/offlineBooking";
 import userModels from "@/models/userModels";
 import { NextResponse } from "next/server";
 
@@ -61,7 +61,7 @@ export const POST = async (req) => {
             }
 
             // Create booking
-            const newBooking = new bookingModels({
+            const newBooking = new offlineBooking({
                 user: existingUser._id,
                 checkInDate: new Date(checkInDate),
                 checkInTime: checkInTime,
@@ -113,7 +113,7 @@ export const GET = async () => {
     try {
         await connectDB();
 
-        const bookings = await bookingModels.find()
+        const bookings = await offlineBooking.find()
             .populate({
                 path: 'user',
                 select: 'fullName email mobileNumber'
