@@ -70,12 +70,12 @@ const SidebarAdmin = () => {
               onClick={() => setSelectedItem('Online Booking')}
             />
           </Link>
-          <Link href="/admin/dashboard/orders" passHref>
+          <Link href="/admin/dashboard/booking/OfflineBooking" passHref>
             <SidebarItem
               icon={<FaListAlt />}
-              label="All Bookings"
-              selected={selectedItem === 'All Bookings'}
-              onClick={() => setSelectedItem('All Bookings')}
+              label="Offline Bookings"
+              selected={selectedItem === 'Offline Bookings'}
+              onClick={() => setSelectedItem('Offline Bookings')}
             />
           </Link>
           <Link href="/admin/dashboard/orders/search" passHref>
