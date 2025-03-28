@@ -1,18 +1,16 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { format } from 'date-fns';
-import { Loader2, Plus } from 'lucide-react';
-import { Form } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
+"use client";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { format } from "date-fns";
+import { Loader2, Plus } from "lucide-react";
+import { Form } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 
 // Step Components
-import GuestInformationStep from '@/components/AdminPanel/Steps/GuestInformationStep';
-import RoomDetailsStep from '@/components/AdminPanel/Steps/RoomDetailsStep';
-import PaymentInformationStep from '@/components/AdminPanel/Steps/PaymentInformationStep';
-import ReviewConfirmStep from '@/components/AdminPanel/Steps/ReviewConfirmStep';
-
-
+import GuestInformationStep from "@/components/AdminPanel/Steps/GuestInformationStep";
+import RoomDetailsStep from "@/components/AdminPanel/Steps/RoomDetailsStep";
+import PaymentInformationStep from "@/components/AdminPanel/Steps/PaymentInformationStep";
+import ReviewConfirmStep from "@/components/AdminPanel/Steps/ReviewConfirmStep";
 
 const OfflineBookingForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -22,29 +20,29 @@ const OfflineBookingForm = () => {
   const [formData, setFormData] = useState({
     users: [],
     checkInDate: new Date(),
-    checkInTime: '12:00',
+    checkInTime: "12:00",
     checkOutDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000), // Tomorrow
-    checkOutTime: '11:00',
+    checkOutTime: "11:00",
     noOfPersons: 1,
     noOfRooms: 1,
     roomNumbers: [],
-    roomType: 'Standard',
+    roomType: "Standard",
     selectedUsers: [],
     totalPrice: 0,
     paidAmount: 0,
     leftAmount: 0,
-    paymentStatus: 'Pending',
-    paymentMethod: 'Cash',
-    specialRequests: '',
-    purpose: '',
-    bookingStatus: 'Confirmed',
+    paymentStatus: "Pending",
+    paymentMethod: "Cash",
+    specialRequests: "",
+    purpose: "",
+    bookingStatus: "Confirmed",
   });
 
   const steps = [
-    { id: 1, name: 'Guest Information' },
-    { id: 2, name: 'Room & Booking Details' },
-    { id: 3, name: 'Payment Information' },
-    { id: 4, name: 'Review & Confirm' },
+    { id: 1, name: "Guest Information" },
+    { id: 2, name: "Room & Booking Details" },
+    { id: 3, name: "Payment Information" },
+    { id: 4, name: "Review & Confirm" },
   ];
 
   const handleNext = () => {
@@ -63,53 +61,57 @@ const OfflineBookingForm = () => {
     defaultValues: {
       noOfPersons: 1,
       noOfRooms: 1,
-      roomType: 'Standard',
-      paymentMethod: 'Cash',
-    }
+      roomType: "Standard",
+      paymentMethod: "Cash",
+    },
   });
 
   const handleGuestAdded = (newGuest) => {
-    setUsers(prev => [...prev, newGuest]);
+    setUsers((prev) => [...prev, newGuest]);
     handleUserSelect(newGuest._id);
   };
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => {
+    setFormData((prev) => {
       const updated = { ...prev, [field]: value };
-      
+
       // Auto-calculate left amount when totalPrice or paidAmount changes
-      if (field === 'totalPrice' || field === 'paidAmount') {
+      if (field === "totalPrice" || field === "paidAmount") {
         updated.leftAmount = updated.totalPrice - updated.paidAmount;
-        
+
         // Auto-determine payment status
         if (updated.leftAmount <= 0) {
-          updated.paymentStatus = 'Paid';
+          updated.paymentStatus = "Paid";
         } else if (updated.paidAmount > 0) {
-          updated.paymentStatus = 'Partial';
+          updated.paymentStatus = "Partial";
         } else {
-          updated.paymentStatus = 'Pending';
+          updated.paymentStatus = "Pending";
         }
       }
-      
+
       return updated;
     });
   };
 
   const handleUserSelect = (userId) => {
-    const selectedUser = users.find(user => user._id === userId);
-    
+    const selectedUser = users.find((user) => user._id === userId);
+
     if (!selectedUser) return;
-    
-    setFormData(prev => {
+
+    setFormData((prev) => {
       // Check if user is already selected
-      const isAlreadySelected = prev.selectedUsers.some(user => user._id === userId);
-      
+      const isAlreadySelected = prev.selectedUsers.some(
+        (user) => user._id === userId
+      );
+
       if (isAlreadySelected) {
         // Remove user if already selected
         return {
           ...prev,
-          selectedUsers: prev.selectedUsers.filter(user => user._id !== userId),
-          users: prev.users.filter(id => id !== userId),
+          selectedUsers: prev.selectedUsers.filter(
+            (user) => user._id !== userId
+          ),
+          users: prev.users.filter((id) => id !== userId),
         };
       } else {
         // Add user if not already selected
@@ -123,82 +125,89 @@ const OfflineBookingForm = () => {
   };
 
   const handleAddRoom = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      roomNumbers: [...prev.roomNumbers, `Room ${prev.roomNumbers.length + 1}`]
+      roomNumbers: [...prev.roomNumbers, `Room ${prev.roomNumbers.length + 1}`],
     }));
   };
 
   const handleRemoveRoom = (index) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      roomNumbers: prev.roomNumbers.filter((_, i) => i !== index)
+      roomNumbers: prev.roomNumbers.filter((_, i) => i !== index),
     }));
   };
 
   const handleRoomNumberChange = (index, value) => {
-    setFormData(prev => {
+    setFormData((prev) => {
       const updatedRoomNumbers = [...prev.roomNumbers];
       updatedRoomNumbers[index] = value;
       return {
         ...prev,
-        roomNumbers: updatedRoomNumbers
+        roomNumbers: updatedRoomNumbers,
       };
     });
   };
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    
+    console.log(formData)
+
     try {
-      // Replace with your actual API call
-      const response = await new Promise(resolve => 
-        setTimeout(() => {
-          resolve({
-            ok: true,
-            json: () => Promise.resolve({ success: true, bookingId: `#Alpha${Math.random().toString(36).substring(2, 12).toUpperCase()}` })
-          });
-        }, 2000)
-      );
-      
-      const data = await response.json();
-      
-      // Reset form or redirect
-      setCurrentStep(1);
-      setFormData({
-        users: [],
-        checkInDate: new Date(),
-        checkInTime: '12:00',
-        checkOutDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-        checkOutTime: '11:00',
-        noOfPersons: 1,
-        noOfRooms: 1,
-        roomNumbers: [],
-        roomType: 'Standard',
-        selectedUsers: [],
-        totalPrice: 0,
-        paidAmount: 0,
-        leftAmount: 0,
-        paymentStatus: 'Pending',
-        paymentMethod: 'Cash',
-        specialRequests: '',
-        purpose: '',
-        bookingStatus: 'Confirmed',
+      const response = await fetch("/api/offlineBooking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Show success message or booking reference
+        
+
+        // Reset form to initial state
+        setCurrentStep(1);
+        setFormData({
+          users: [],
+          checkInDate: new Date(),
+          checkInTime: "12:00",
+          checkOutDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+          checkOutTime: "11:00",
+          noOfPersons: 1,
+          noOfRooms: 1,
+          roomNumbers: [],
+          roomType: "Standard",
+          selectedUsers: [],
+          totalPrice: 0,
+          paidAmount: 0,
+          leftAmount: 0,
+          paymentStatus: "Pending",
+          paymentMethod: "Cash",
+          specialRequests: "",
+          purpose: "",
+          bookingStatus: "Confirmed",
+        });
+
+        // Optional: Clear users list
+        setUsers([]);
+      } else {
+        // Handle error response
+      }
     } catch (error) {
-      console.error('Error creating booking:', error);
+      console.error("Error creating booking:", error);
     } finally {
       setIsLoading(false);
     }
   };
-
   // Render current step component
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
         return (
-          <GuestInformationStep 
+          <GuestInformationStep
             formData={formData}
             handleInputChange={handleInputChange}
             users={users}
@@ -211,7 +220,7 @@ const OfflineBookingForm = () => {
         );
       case 2:
         return (
-          <RoomDetailsStep 
+          <RoomDetailsStep
             formData={formData}
             handleInputChange={handleInputChange}
             handleAddRoom={handleAddRoom}
@@ -221,14 +230,14 @@ const OfflineBookingForm = () => {
         );
       case 3:
         return (
-          <PaymentInformationStep 
+          <PaymentInformationStep
             formData={formData}
             handleInputChange={handleInputChange}
           />
         );
       case 4:
         return (
-          <ReviewConfirmStep 
+          <ReviewConfirmStep
             formData={formData}
             handlePrevious={handlePrevious}
             handleSubmit={handleSubmit}
@@ -251,8 +260,8 @@ const OfflineBookingForm = () => {
                 <div
                   className={`flex h-8 w-8 items-center justify-center rounded-full border ${
                     currentStep >= step.id
-                      ? 'border-primary bg-primary text-white'
-                      : 'border-gray-300 bg-white text-gray-500'
+                      ? "border-primary bg-primary text-white"
+                      : "border-gray-300 bg-white text-gray-500"
                   }`}
                 >
                   {currentStep > step.id ? (
@@ -274,7 +283,9 @@ const OfflineBookingForm = () => {
                 </div>
                 <span
                   className={`text-sm font-medium ${
-                    currentStep >= step.id ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500'
+                    currentStep >= step.id
+                      ? "text-gray-900 dark:text-gray-100"
+                      : "text-gray-500"
                   }`}
                 >
                   {step.name}
@@ -289,20 +300,20 @@ const OfflineBookingForm = () => {
                   <div
                     className={`h-1 w-full ${
                       currentStep > step.id
-                        ? 'bg-primary'
+                        ? "bg-primary"
                         : currentStep === step.id
-                        ? 'bg-primary/50'
-                        : 'bg-gray-200'
+                        ? "bg-primary/50"
+                        : "bg-gray-200"
                     }`}
                   />
                   {i < steps.length - 1 && (
                     <div
                       className={`h-1 w-full ${
                         currentStep > step.id + 1
-                          ? 'bg-primary'
+                          ? "bg-primary"
                           : currentStep === step.id + 1
-                          ? 'bg-primary/50'
-                          : 'bg-gray-200'
+                          ? "bg-primary/50"
+                          : "bg-gray-200"
                       }`}
                     />
                   )}
@@ -311,7 +322,7 @@ const OfflineBookingForm = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Step Content */}
         {renderStepContent()}
 
@@ -325,9 +336,7 @@ const OfflineBookingForm = () => {
             >
               Previous
             </Button>
-            <Button onClick={handleNext}>
-              Next
-            </Button>
+            <Button onClick={handleNext}>Next</Button>
           </div>
         )}
       </div>
