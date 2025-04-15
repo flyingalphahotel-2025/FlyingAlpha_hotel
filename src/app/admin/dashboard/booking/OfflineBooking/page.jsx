@@ -111,8 +111,9 @@ const OfflineBookings = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleView = (bookingId) => {
-    router.push(`/bookings/${bookingId}`);
+    router.push(`/admin/dashboard/booking/OfflineBooking/${bookingId}`);
   };
+  
 
   const handlePrint = (bookingId) => {
     // Print functionality would go here

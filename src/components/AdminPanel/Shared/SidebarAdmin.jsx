@@ -53,21 +53,13 @@ const SidebarAdmin = () => {
             />
           </Link>
 
-          <SectionTitle title="Orders" />
+          <SectionTitle title="Booking" />
           <Link href="/admin/dashboard/booking/AddBooking" passHref>
             <SidebarItem
               icon={<MdAdd />}
               label="Add Booking"
               selected={selectedItem === 'Add Booking'}
               onClick={() => setSelectedItem('Add Booking')}
-            />
-          </Link>
-          <Link href="/admin/dashboard/booking/OnlineBooking" passHref>
-            <SidebarItem
-              icon={<FaShoppingCart />}
-              label="Online Booking"
-              selected={selectedItem === 'Online Booking'}
-              onClick={() => setSelectedItem('Online Booking')}
             />
           </Link>
           <Link href="/admin/dashboard/booking/OfflineBooking" passHref>
@@ -78,14 +70,26 @@ const SidebarAdmin = () => {
               onClick={() => setSelectedItem('Offline Bookings')}
             />
           </Link>
-          <Link href="/admin/dashboard/orders/search" passHref>
+
+          <SectionTitle title="Online Booking" />
+          <Link href="/admin/dashboard/booking/OnlineBooking" passHref>
             <SidebarItem
-              icon={<FaSearch />}
-              label="Search Bookings"
-              selected={selectedItem === 'Search Bookings'}
-              onClick={() => setSelectedItem('Search Bookings')}
+              icon={<FaShoppingCart />}
+              label="Online Booking"
+              selected={selectedItem === 'Online Booking'}
+              onClick={() => setSelectedItem('Online Booking')}
             />
           </Link>
+          <Link href="/admin/dashboard/booking/OnlineBooking" passHref>
+            <SidebarItem
+              icon={<FaShoppingCart />}
+              label="Online Booking"
+              selected={selectedItem === 'Online Booking'}
+              onClick={() => setSelectedItem('Online Booking')}
+            />
+          </Link>
+         
+
 
           <SectionTitle title="Policy" />
           <Link href="/admin/dashboard/PrivacyPolicy" passHref>
