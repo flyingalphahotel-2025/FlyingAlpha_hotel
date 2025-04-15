@@ -144,33 +144,32 @@ export const POST = async (req) => {
     }
 };
 
-// GET API to fetch bookings with populated user information
 export const GET = async () => {
     try {
-        await connectDB();
-
-        const bookings = await offlineBooking.find()
-            .populate({
-                path: 'users', // Update to use 'users' instead of 'user'
-                select: 'fullName email mobileNumber'
-            })
-            .sort({ createdAt: -1 }); // Sort by most recent bookings first
-
-        return NextResponse.json(
-            { 
-                message: "Bookings fetched successfully", 
-                bookings 
-            },
-            { status: 200 }
-        );
+      await connectDB();
+  
+      const bookings = await offlineBooking.find()
+        .populate({
+          path: "users", // Correct path based on your schema
+          select: "fullName email mobileNumber", // Select relevant user fields
+        })
+        .sort({ createdAt: -1 }); // Most recent first
+  
+      return NextResponse.json(
+        {
+          message: "Bookings fetched successfully",
+          bookings,
+        },
+        { status: 200 }
+      );
     } catch (error) {
-        console.error("Error fetching bookings:", error);
-        return NextResponse.json(
-            { 
-                message: "Error fetching bookings", 
-                error: error instanceof Error ? error.message : String(error) 
-            },
-            { status: 500 }
-        );
+      console.error("Error fetching bookings:", error);
+      return NextResponse.json(
+        {
+          message: "Error fetching bookings",
+          error: error instanceof Error ? error.message : String(error),
+        },
+        { status: 500 }
+      );
     }
-};
+  };
