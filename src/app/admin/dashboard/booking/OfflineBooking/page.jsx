@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { AutoDownloadPDF } from "@/components/AdminPanel/InvoicePDF";
 
 const OfflineBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -37,6 +38,8 @@ const OfflineBookings = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedBookingId, setSelectedBookingId] = useState(null);
+  const [isPrinting, setIsPrinting] = useState(false);
   const itemsPerPage = 8;
   const router = useRouter();
 
@@ -113,11 +116,17 @@ const OfflineBookings = () => {
   const handleView = (bookingId) => {
     router.push(`/admin/dashboard/booking/OfflineBooking/${bookingId}`);
   };
-  
 
   const handlePrint = (bookingId) => {
-    // Print functionality would go here
     console.log("Print booking:", bookingId);
+    setSelectedBookingId(bookingId);
+    setIsPrinting(true);
+    
+    // Reset the states after a timeout to allow the download to complete
+    setTimeout(() => {
+      setIsPrinting(false);
+      setSelectedBookingId(null);
+    }, 2000);
   };
 
   // Get payment status badge color
@@ -306,6 +315,9 @@ const OfflineBookings = () => {
             </PaginationContent>
           </Pagination>
         )}
+        
+        {/* PDF Download Component */}
+        {selectedBookingId && <AutoDownloadPDF bookingId={selectedBookingId} onComplete={() => setSelectedBookingId(null)} />}
       </CardContent>
     </Card>
   );
