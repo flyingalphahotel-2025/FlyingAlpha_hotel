@@ -24,29 +24,30 @@ const Layout = ({ children }) => {
         </div>
       </div>
 
-      {/* React Hot Toaster - moved outside the flex container */}
       <Toaster
-        position="top-right" 
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-          success: {
-            iconTheme: {
-              primary: '#4CAF50',
-              secondary: '#fff',
-            },
-          },
-          error: {
-            iconTheme: {
-              primary: '#FF5252',
-              secondary: '#fff',
-            },
-          },
-        }}
-      />
+  position="top-right"
+  toastOptions={{
+    duration: 3000,
+    style: {
+      background: '#363636',
+      color: '#fff',
+    },
+    success: {
+      icon: '✅', // ✅ Add a custom checkmark icon
+      iconTheme: {
+        primary: '#4CAF50',
+        secondary: '#fff',
+      },
+    },
+    error: {
+      icon: '❌', // Optional: ensure it's consistent
+      iconTheme: {
+        primary: '#FF5252',
+        secondary: '#fff',
+      },
+    },
+  }}
+/>
     </>
   );
 };
