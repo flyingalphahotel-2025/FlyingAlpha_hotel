@@ -7,11 +7,10 @@ export const GET = async (req, { params }) => {
   try {
     await connectDB();
 
-    const { id } = params;
+    const { id } = await params;
 
     const booking = await offlineBooking.findById(id).populate({
       path: "users",
-      select: "fullName email mobileNumber",
     });
 
     if (!booking) {
